@@ -1,0 +1,97 @@
+/* --------------- CSS Document - Begin --------------- */
+
+
+    /* --------------- Contenu Global -------------- */
+    
+        html {
+            height: 100%;
+        }
+
+        body {
+            position: relative;
+            min-height: 100%;
+            margin: auto;
+            font-size: 16px;
+        }
+        
+        #main {
+            text-align: center;
+            position: relative;	
+            width: 75%;
+            margin: auto;
+            padding-bottom: 60px;
+        }
+
+    /* ------------------- Menus ------------------- */
+
+        #menu{
+            text-align: center;
+            position: relative;
+            width: 75%;
+            margin: auto;
+        }
+
+        #nav_menu_nolog ul {
+            background-color: gainsboro;
+            width: 100%;
+            margin: auto;
+            padding: 12px;
+            padding-top: 8px;
+            list-style-type : none; /* Car sinon les puces se placent n'importe où */
+            text-align: center;
+            margin-right: 0px;
+
+            margin-bottom: 35px;
+            -webkit-border-bottom-right-radius: 10px;
+            -webkit-border-bottom-left-radius: 10px;
+            -moz-border-radius-bottomright: 10px;
+            -moz-border-radius-bottomleft: 10px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        #nav_menu ul {
+            background-color: #008080;
+            width: 30%;
+            margin: auto;
+            padding: 12px;
+            padding-top: 8px;
+            padding-bottom: 5px;
+            list-style-type : none; /* Car sinon les puces se placent n'importe où */
+            text-align: center;
+            margin-right: 0px;
+        }
+    
+        #nav_menu_nolog li, #nav_menu li {
+            display : inline;
+            min-width: 30%;
+            padding : 0 0.5em; /* Pour espacer les boutons entre eux */
+        }
+
+    /* --------------- Corps du site --------------- */
+
+
+    /* --------- Eléments principaux --------- */
+
+
+    /* ---------- Footer ---------- */
+
+        footer {
+            position: fixed;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            margin: 0px auto;
+            background-color: gainsboro;
+            -webkit-border-top-left-radius: 20px;
+            -webkit-border-top-right-radius: 20px;
+            -moz-border-radius-topleft: 20px;
+            -moz-border-radius-topright: 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+            width: 75%;
+        }
+    
+/* --------------- CSS Document - End --------------- */

@@ -1,6 +1,6 @@
 <?php
     require_once 'includes/config.php';
-    $title_page = 'Accueil';
+    $title_page = 'A propos';
     require_once 'includes/head.php';
 ?>
 
@@ -15,10 +15,10 @@
 
 ?>
     <div id="main">
-        <h1>Accueil</h1>
+        <h1>A propos</h1>
     </div>
 
  <?php
     require_once 'includes/footer.php';
 
- ?>
+?>
