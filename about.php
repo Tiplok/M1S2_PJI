@@ -7,10 +7,6 @@
 <body>
 
 <?php
-    if(is_logged()) {
-        header('Location: home.php');
-        exit;
-    }
     require_once 'includes/menu.php';
 
 ?>

@@ -18,3 +18,7 @@
             return false;
         }
     }
+    
+    function hash_password($password) {
+        return crypt($password, '$65egh@5+2-f');
+    }

@@ -8,6 +8,7 @@
             <nav id="nav_menu_nolog">
                 <ul>
                     <li><a href="<?php echo $folder;?>index.php" title="Accueil">Accueil</a></li>
+                    <li><a href="<?php echo $folder;?>leaderboard.php" title="Voir les meilleurs joueurs">Classement</a></li>
                     <li><a href="<?php echo $folder;?>about.php" title="Pour en savoir plus">A propos</a></li>
                 </ul>
             </nav>
@@ -21,8 +22,10 @@
         <header>
             <nav id="nav_menu">
                 <ul>
+                    <li><a href="<?php echo $folder;?>home.php" title="Accueil">Accueil</a></li>
+                    <li><a href="<?php echo $folder;?>board.php" title="Plateau du jeu">Plateau</a></li>
+                    <li><a href="<?php echo $folder;?>leaderboard.php" title="Voir les meilleurs joueurs">Classement</a></li>
                     <li><a href="<?php echo $folder;?>profile.php" title="Votre compte">Mon compte</a></li>
-                    <li><a href="<?php echo $folder;?>message.php" title="Vos messages">Messagerie</a></li>
                     <li><a href="<?php echo $folder;?>about.php" title="Pour en savoir plus">A propos</a></li>
                     <li><a href="<?php echo $folder;?>logout.php" title="Se déconnecter">Déconnexion</a></li>
                 </ul>
