@@ -37,7 +37,7 @@
         }
 
         #nav_menu_nolog ul {
-            background-color: rgba(173, 255, 47, 0.6);
+            background-color: rgba(0, 255, 0, 0.3);
             width: 100%;
             margin: auto;
             padding: 12px;
@@ -56,7 +56,7 @@
         }
 
         #nav_menu ul {
-            background-color: greenyellow;
+            background-color: rgba(0, 255, 0, 0.3);
             width: 100%;
             margin: auto;
             padding: 12px;
@@ -79,6 +79,11 @@
             min-width: 30%;
             padding : 0 0.5em; /* Pour espacer les boutons entre eux */
         }
+    
+        #nav_menu_nolog a, #nav_menu a {
+            text-decoration: none;
+            color: black;
+        }
 
     /* --------------- Corps du site --------------- */
     
@@ -92,10 +97,63 @@
             width: 50%;
         }
         
+        #div_board {
+            float: left;
+            width: 80%;
+        }
 
+        #div_trees_select {
+            float: right;
+        }
+        
 
     /* --------- Eléments principaux --------- */
-
+    
+        #table_board {
+            width: 95%;
+            text-align : center;
+            margin: auto;
+            border: 2px solid black;
+        }
+        
+        #table_board td {
+            border: 1px solid black;
+            background-color: lightgreen;
+            height: 64px;
+        }
+        
+        #table_board td img {
+            display: block;
+        }
+        
+        .empty_td {
+            padding: black;
+        }
+        
+        #table_trees_select {
+            width: 260px;
+            text-align : center;
+            margin: auto;
+            border: 2px solid black;
+        }
+        
+        #table_trees_select td {
+            border: 1px solid black;
+            background-color: lightgreen;
+        }
+        
+        .td_tree_text {
+            padding: 25px;
+        }
+        
+        .td_tree_img {
+            width: 64px;
+        }
+        
+        .td_tree_img img {
+            display: block;
+            margin: 0 auto;
+        }
     
         #table_leaderboard {
             text-align : center;
@@ -109,16 +167,16 @@
         }
 
         #table_leaderboard .myrank {
-            background-color: #FFA500;
+            background-color: lightgreen;
         }
         
         
-        #table_profile  {
+        #table_profile {
             width: 600px;
             margin: auto;
         }
 
-        #table_profile  td {
+        #table_profile td {
             padding: 4px;
         }
 
@@ -166,7 +224,7 @@
             left: 0px;
             right: 0px;
             margin: 0px auto;
-            background-color: rgba(173, 255, 47, 0.6);
+            background-color: rgba(0, 255, 0, 0.3);
             -webkit-border-top-left-radius: 20px;
             -webkit-border-top-right-radius: 20px;
             -moz-border-radius-topleft: 20px;
