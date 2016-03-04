@@ -22,3 +22,10 @@
     function hash_password($password) {
         return crypt($password, '$65egh@5+2-f');
     }
+    
+    /**
+     * Retourne le nombre $nb en séparant les milliers
+     */
+    function display_nb($nb) {
+        return number_format($nb, 0, ',', ' ');
+    }

@@ -21,6 +21,10 @@
             margin: auto;
             padding-bottom: 60px;
         }
+        
+        table {
+            border-collapse: collapse;
+        }
 
     /* ------------------- Menus ------------------- */
 
@@ -77,19 +81,81 @@
 
     /* --------------- Corps du site --------------- */
     
-    #div_login {
-        float: left;
-        width: 50%;
-    }
-    
-    #div_register {
-        float: right;
-        width: 50%;
-    }
+        #div_login {
+            float: left;
+            width: 50%;
+        }
+
+        #div_register {
+            float: right;
+            width: 50%;
+        }
+        
 
 
     /* --------- Eléments principaux --------- */
 
+    
+        #table_leaderboard {
+            text-align : center;
+            margin: auto;
+            border: 2px solid black;
+        }
+
+        #table_leaderboard th, #table_leaderboard tr td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        #table_leaderboard .myrank {
+            background-color: #FFA500;
+        }
+        
+        
+        #table_profile  {
+            width: 600px;
+            margin: auto;
+        }
+
+        #table_profile  td {
+            padding: 4px;
+        }
+
+        .label_profile {
+            width: 300px;
+            text-align : right;
+        }
+
+        .input_profile {
+            width: 300px;
+            text-align : left;
+        }
+
+        .input_profile input {
+            width: 200px;
+
+        }
+
+        .valid_profile {
+            text-align: center;
+        }
+        
+        #table_starting_board {
+            width: 80%;
+        }
+        
+        #table_starting_board td {
+            //width: 300px;
+            width: 100px;
+            height: 50px;
+            text-align: center;
+            font-size: 23px;
+            font-weight: bold;
+        }
+        
+        #table_starting_board td {
+            //width: 30px;
+        }
 
     /* ---------- Footer ---------- */
 
