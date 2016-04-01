@@ -92,7 +92,7 @@
         if($login_username && $password) {
 
             //Authentification
-            $query_username = "SELECT username FROM user WHERE username = ".$bdd->quote($login_username)." AND password = '".hash_password($password)."'";
+            $query_username = "SELECT PK_user, username FROM user WHERE username = ".$bdd->quote($login_username)." AND password = '".hash_password($password)."'";
             $result_username = $bdd->query($query_username);
 
             //Si on trouve l'utilisateur
@@ -107,7 +107,9 @@
                 } else {
 
                     $row_username = $result_username->fetch(PDO::FETCH_ASSOC);
+                    $_SESSION['PK_user'] = $row_username['PK_user'];
                     $_SESSION['username'] = $row_username['username'];
+                    $_SESSION['current_PK_tree'] = 0;
 
                     //On met à jour la date de la dernière connexion
                     $query_update_user = $bdd->prepare("UPDATE user SET date_last_login = :date_last_login WHERE username = ". $bdd->quote($_SESSION['username']));

@@ -3,10 +3,27 @@
 //         Rivière = R (River)
 //         Arbre   = A (Tree)
 
+function loadCurrentTree(PK_tree){
+    $.post('ajax/load_current_tree.php', {
+        PK_tree: PK_tree
+    }, function() {
+    });
+}
+
+function plantCurrentTree(row, column){
+    $.post('ajax/plant_current_tree.php', {
+        row: row,
+        column: column
+    }, function() {
+        window.location.reload();
+    });
+}
+
+// En réalité, le nombre de lignes est de 9 et le nombre de colonnes est de 16, il faut changer et le schéma se retrouve tourner à 90° vers la droite (sens horaire)
 var nbRow = 16;
 var nbCol = 9;
 
-var case = new Object();
+//var case = new Object();
 
 var grid = [
     ["E", "E", "E", "E", "E", "E", "E", "E", "E"], // L1

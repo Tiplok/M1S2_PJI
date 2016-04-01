@@ -1,4 +1,4 @@
-class Case {
+/*class Case {
 	// Type Cases : Vide    = E (Empty)
 	//         		Ville   = T (Town)
 	//        		Rivière = R (River)
@@ -59,4 +59,4 @@ class Case {
 	get_positive(nb){
 		return (nb >= 0) ? nb : 0;
 	}
-}
+}*/
