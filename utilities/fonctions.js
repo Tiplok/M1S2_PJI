@@ -3,10 +3,18 @@
 //         Rivière = R (River)
 //         Arbre   = A (Tree)
 
+function loadContentBoard(){
+    $.post('ajax/content_board.php', {
+    }, function(data) {
+        document.getElementById('main').innerHTML = data;
+    });
+}
+
 function loadCurrentTree(PK_tree){
     $.post('ajax/load_current_tree.php', {
         PK_tree: PK_tree
     }, function() {
+        loadContentBoard();
     });
 }
 
@@ -14,9 +22,23 @@ function plantCurrentTree(row, column){
     $.post('ajax/plant_current_tree.php', {
         row: row,
         column: column
-    }, function() {
-        window.location.reload();
+    }, function(data) {
+        if(data){
+            alert(data);
+        }
+        loadContentBoard();
     });
+}
+
+function removeTree(row, column){
+    if(confirm('Êtes-vous sûr de vouloir retirer cette fôret ?')){
+        $.post('ajax/remove_tree.php', {
+            row: row,
+            column: column
+        }, function() {
+            loadContentBoard();
+        });
+    }
 }
 
 // En réalité, le nombre de lignes est de 9 et le nombre de colonnes est de 16, il faut changer et le schéma se retrouve tourner à 90° vers la droite (sens horaire)
