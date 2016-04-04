@@ -10,6 +10,15 @@
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']] = $row_user_tree['FK_tree'];
     }
     
+    $query_board_element = "SELECT * FROM board_element";
+    $result_board_element = $bdd->query($query_board_element);
+    $array_board_element = array();
+    while($row_board_element = $result_board_element->fetch(PDO::FETCH_ASSOC)){
+        
+        // Création d'un tableau à 2 dimensions (row et column) avec le PK concernant les éléments fixes du plateau
+        $array_board_element[$row_board_element['nb_row']][$row_board_element['nb_column']]['PK_board_element'] = $row_board_element['PK_board_element'];
+    }
+    
     
     $query_list_tree = "SELECT PK_tree, name, cost, image FROM tree";
     $result_list_tree = $bdd->query($query_list_tree);
@@ -40,19 +49,31 @@
                         if(is_numeric($array_board[$nb_row][$nb_column])){
 
                             // On récupère l'image de l'arbre en question
-                            $query_img_tree = "SELECT image FROM tree WHERE PK_tree = ".$array_board[$nb_row][$nb_column];
+                            $query_img_tree = "SELECT PK_tree, image FROM tree WHERE PK_tree = ".$array_board[$nb_row][$nb_column];
                             $result_img_tree = $bdd->query($query_img_tree);
                             $row_img_tree = $result_img_tree->fetch(PDO::FETCH_ASSOC);
 
-                            echo '<td><img height="64px" width="64px" src="styles/images/board_icons/'.$row_img_tree['image'].'" alt="tree" onclick="removeTree('.$nb_row.', '.$nb_column.')"/></td>';
+                            echo '<td><img class="tooltip" data-PK_table="'.$row_img_tree['PK_tree'].'" data-table="tree" data-info="planted" height="64px" width="64px" src="styles/images/board_icons/'.$row_img_tree['image'].'" alt="tree" onclick="removeTree('.$nb_row.', '.$nb_column.')"/></td>';
                         } elseif($array_board[$nb_row][$nb_column] == 'E') {
-                            // On affiche une case vide
-                            echo '<td class="empty_td"><img height="64px" width="64px" src="styles/images/board_icons/empty.png" alt="empty" onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>';
-                        } else {
-                            // On affiche l'image correspondant soit à une ville ou une rivière
-                            echo $array_display[$array_board[$nb_row][$nb_column]];
+                                if(isset($array_board_element[$nb_row][$nb_column]['PK_board_element'])){
+                                    echo '<td class="empty_td"><img class="tooltip" data-table="empty" data-PK_table="'.$array_board_element[$nb_row][$nb_column]['PK_board_element'].'" height="64px" width="64px" src="styles/images/board_icons/empty.png" alt="empty" onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>';
+                                } else {
+                                    echo '<td class="empty_td"><img class="tooltip" data-table="empty" data-PK_table="??" height="64px" width="64px" src="styles/images/board_icons/empty.png" alt="empty" onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>';
+                                }
+                        } elseif($array_board[$nb_row][$nb_column] == 'T') {
+                            if(isset($array_board_element[$nb_row][$nb_column]['PK_board_element'])){
+                                echo '<td><img class="tooltip" data-table="town" data-PK_table="'.$array_board_element[$nb_row][$nb_column]['PK_board_element'].'" height="64px" width="64px" src="styles/images/board_icons/town.png" alt="town" /></td>';
+                            } else {
+                                echo '<td><img class="tooltip" data-table="town" data-PK_table="??" height="64px" width="64px" src="styles/images/board_icons/town.png" alt="town" /></td>';
+                            }
+                        } elseif($array_board[$nb_row][$nb_column] == 'R') {
+                            if(isset($array_board_element[$nb_row][$nb_column]['PK_board_element'])){
+                                echo '<td><img class="tooltip" data-table="river" data-PK_table="'.$array_board_element[$nb_row][$nb_column]['PK_board_element'].'" height="64px" width="64px" src="styles/images/board_icons/river.png" alt="river" /></td>';
+                            } else {
+                                echo '<td><img class="tooltip" data-table="river" data-PK_table="??" height="64px" width="64px" src="styles/images/board_icons/river.png" alt="river" /></td>';
+                            }  
                         }
-                    }
+                    }   
                     echo '</tr>';
                 }
         ?>
@@ -80,7 +101,7 @@
         ?>
         <tr>
             <td class="td_tree_img">
-                <img src="styles/images/board_icons/<?php echo $row_list_tree['image']; ?>" alt="tree" <?php if($_SESSION['current_PK_tree'] == $row_list_tree['PK_tree']) { echo 'style="border:solid 3px white;"'; } ?> height="64px" width="64px;" onclick="loadCurrentTree(<?php echo $row_list_tree['PK_tree']; ?>)"/>
+                <img class="tooltip" data-PK_table="<?php echo $row_list_tree['PK_tree']; ?>" data-table="tree" src="styles/images/board_icons/<?php echo $row_list_tree['image']; ?>" alt="tree" <?php if($_SESSION['current_PK_tree'] == $row_list_tree['PK_tree']) { echo 'style="border:solid 3px white;"'; } ?> height="64px" width="64px;" onclick="loadCurrentTree(<?php echo $row_list_tree['PK_tree']; ?>)"/>
             </td>
             <td class="td_tree_text"><?php echo $row_list_tree['name']; ?></td>
             <td class="td_tree_text"><?php echo number_format($row_list_tree['cost'], 0, ',', ' '); ?></td>

@@ -4,7 +4,7 @@
     require_once 'includes/head.php';
 ?>
 
-<body onload="loadContentBoard()">
+<body onload="loadContentBoard();">
 
 <?php
     require_once 'includes/menu.php';

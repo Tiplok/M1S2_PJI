@@ -49,10 +49,26 @@
         array('E','E','T','E','E','E','R','T','E','E','E','E','E','T','E','E')
     );
     
-    $array_display = array(
-        'R' => '<td><img height="64px" width="64px" src="styles/images/board_icons/river.png" alt="river" /></td>',
-        'T' => '<td><img height="64px" width="64px" src="styles/images/board_icons/city.png" alt="city" /></td>'
-    );
+    /* Script pour insérer les éléments du plateau */
+    /*for($i = 0; $i < count($array_init_board); $i++){
+        for($j = 0; $j < count($array_init_board[$i]); $j++){
+            $query_insert_user_tree = $bdd->prepare("INSERT INTO board_element (type, nb_row, nb_column) VALUES (:type, :nb_row, :nb_column)");
+            $query_insert_user_tree->execute(array(
+                ':type' => $array_init_board[$i][$j],
+                ':nb_row' => $i,
+                ':nb_column' => $j
+            ));
+        }
+    }*/
+    
+    /* Requêtes pour changer les valeurs des éléments du plateau */
+    "UPDATE board_element SET oxygen = 1000 WHERE type = 'empty'";
+    "UPDATE board_element SET water = 100 WHERE type = 'empty'";
+    
+    "UPDATE board_element SET water = 200 WHERE type = 'river'";
+    
+    "UPDATE board_element SET oxygen = 70000 WHERE type = 'town'";
+    
     
     //Récupère le fichier des fonctions php
     if(strstr($_SERVER["DOCUMENT_ROOT"], 'pji')){

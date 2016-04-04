@@ -31,5 +31,5 @@
         }
     }
     
-    $_SESSION['current_PK_tree'] = 0;
+    //$_SESSION['current_PK_tree'] = 0;
 ?>
