@@ -14,7 +14,7 @@
         <h1>Classement</h1>
         
         <?php
-            $query_user = "SELECT username, best_score FROM user ORDER BY best_score";
+            $query_user = "SELECT username, best_score FROM user ORDER BY best_score DESC";
             $result_user = $bdd->query($query_user);
         ?>
         

@@ -3,10 +3,93 @@
 //         Rivière = R (River)
 //         Arbre   = A (Tree)
 
+function loadContentBoard(){
+    $.post('ajax/content_board.php', {
+    }, function(data) {
+        document.getElementById('main').innerHTML = data;
+        processTooltip();
+    });
+}
+
+function loadCurrentTree(PK_tree){
+    $.post('ajax/load_current_tree.php', {
+        PK_tree: PK_tree
+    }, function() {
+        loadContentBoard();
+    });
+}
+
+function plantCurrentTree(row, column){
+    $.post('ajax/plant_current_tree.php', {
+        row: row,
+        column: column
+    }, function(data) {
+        if(data){
+            alert(data);
+        }
+        loadContentBoard();
+    });
+}
+
+function removeTree(row, column){
+    if(confirm('Êtes-vous sûr de vouloir retirer cette fôret ?')){
+        $.post('ajax/remove_tree.php', {
+            row: row,
+            column: column
+        }, function() {
+            loadContentBoard();
+        });
+    }
+}
+
+$(document).ready(processTooltip);
+
+function processTooltip(){
+    $('.tooltip').each(function () {
+        $(this).qtip({
+            content: {
+                text: function (event, api) {
+                    $.ajax({
+                        url: "ajax/tooltip.php", // Use href attribute as URL
+                        method: "POST",
+                        data: {
+                            PK_table: $(this).attr('data-PK_table'), 
+                            table: $(this).attr('data-table'),
+                            info: $(this).attr('data-info')
+                        }
+                    }).then(function (content) {
+                        // Set the tooltip content upon successful retrieval
+                        api.set('content.text', content);
+                    }, function (xhr, status, error) {
+                        // Upon failure... set the tooltip content to error
+                        api.set('content.text', status + ': ' + error);
+                    });
+
+                    return 'Chargement...'; // Set some initial text
+                }
+            },
+            position: {
+                viewport: $(window)
+            },
+            style: 'qtip-wiki',
+                show: {
+                    solo: true, // Hide other when opening
+                    delay: 0 // Show delay
+                },
+                hide: {
+                    hide: false, // Hide other when opening
+                    fixed: true, // Stay visible when mousing onto tooltip
+                    delay: 0 // Hide delay (ms)
+                }
+        });
+    });
+}
+
+// En réalité, le nombre de lignes est de 9 et le nombre de colonnes est de 16, il faut changer et le schéma se retrouve tourner à 90° vers la droite (sens horaire)
 var nbRow = 16;
 var nbCol = 9;
 
-var case = new Object();
+//var case = new Object();
 
 var grid = [
     ["E", "E", "E", "E", "E", "E", "E", "E", "E"], // L1
