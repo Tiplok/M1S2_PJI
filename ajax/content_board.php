@@ -53,7 +53,7 @@
                             $result_img_tree = $bdd->query($query_img_tree);
                             $row_img_tree = $result_img_tree->fetch(PDO::FETCH_ASSOC);
 
-                            echo '<td><img class="tooltip" data-PK_table="'.$row_img_tree['PK_tree'].'" data-table="tree" data-info="planted" height="64px" width="64px" src="styles/images/board_icons/'.$row_img_tree['image'].'" alt="tree" onclick="removeTree('.$nb_row.', '.$nb_column.')"/></td>';
+                            echo '<td><img class="tooltip" data-PK_table="'.$row_img_tree['PK_tree'].'" data-table="tree" data-info="planted" height="64px" width="64px" src="styles/images/board_icons/'.$row_img_tree['image'].'" alt="tree" onclick="removeTree('.$nb_row.', '.$nb_column.', '.(isset($_SESSION['current_PK_tree'])&&$_SESSION['current_PK_tree']==0?'true':'false').')"/></td>';
                         } elseif($array_board[$nb_row][$nb_column] == 'E') {
                                 if(isset($array_board_element[$nb_row][$nb_column]['PK_board_element'])){
                                     echo '<td class="empty_td"><img class="tooltip" data-table="empty" data-PK_table="'.$array_board_element[$nb_row][$nb_column]['PK_board_element'].'" height="64px" width="64px" src="styles/images/board_icons/empty.png" alt="empty" onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>';
@@ -77,6 +77,7 @@
                     echo '</tr>';
                 }
         ?>
+        
     </table>
 </div>
 
@@ -109,6 +110,18 @@
         <?php
             }
         ?>
+        <tr>
+            <td colspan="3">
+                <span <?php if($_SESSION['current_PK_tree'] == 0) { echo 'style="border:solid 5px red;"'; } ?>>
+                        <input type="button" value="Mode déforestation" onclick="loadCurrentTree(0)" />
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <input type="button" value="Retirer toutes les fôrets" onclick="removeTree(-1,-1, false)" />
+            </td>
+        </tr>
     </table>
 </div>
 

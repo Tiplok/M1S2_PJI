@@ -31,14 +31,37 @@ function plantCurrentTree(row, column){
     });
 }
 
-function removeTree(row, column){
-    if(confirm('Êtes-vous sûr de vouloir retirer cette fôret ?')){
-        $.post('ajax/remove_tree.php', {
-            row: row,
-            column: column
-        }, function() {
-            loadContentBoard();
-        });
+function removeTree(row, column, deforestation){
+    // Cas où on demande de retirer toutes les fôrets
+    if(row == -1 && column == -1){
+        if(confirm('Êtes-vous sûr de vouloir retirer TOUTES les fôrets ?')){
+            $.post('ajax/remove_tree.php', {
+                row: row,
+                column: column
+            }, function() {
+                loadContentBoard();
+            });
+        }
+    } else {
+    
+        // Si on est en mode déforestation, pas de message de confirmation
+        if(deforestation){
+            $.post('ajax/remove_tree.php', {
+                row: row,
+                column: column
+            }, function() {
+                loadContentBoard();
+            });
+        } else {
+            if(confirm('Êtes-vous sûr de vouloir retirer cette fôret ?')){
+                $.post('ajax/remove_tree.php', {
+                    row: row,
+                    column: column
+                }, function() {
+                    loadContentBoard();
+                });
+            }
+        }
     }
 }
 
