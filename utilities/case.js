@@ -1,11 +1,13 @@
 // Use Prototype 1.6.0
 var gridCase = Class.create({
-	initialize: function(type, data){
+	initialize: function(type, abs, ord, data){
 		// Type Cases : Vide    = E (Empty)
 		//         		Ville   = T (Town)
 		//        		Rivière = R (River)
 		//        		Arbre   = A (Tree)
 		this.type = type || "E";
+		this.abs = abs || 0;
+		this.ord = ord || 0;
 		// Peut contenir eau fournie, oxygène requis/produit, ... selon type de case
 		this.data = data || {};
 		this.score = score || 0;
@@ -57,25 +59,21 @@ var gridCase = Class.create({
 		}
 	},
 
-	// Place un arbre et calcule le score des cases alentours.
+	// Place un arbre sur une case et calcule le score des cases alentours. La fonction est appelée sur un arbre.
 	// tree est l'arbre a placé qui contient :
 	//  - data.tree_type : Le type d'arbre (Épicéa/ Chêne/ Pin/ Hêtre)
 	//  - data.cost : Le coût de l'arbre (10000/ 9000/ 8000/ 7000)
 	//  - data.default_oxygen_give : L'oxygène donné par défault (22/ 20/ 18/ 16)
 	//  - data.water_need : Le besoin en eau (220/ 200/ 180 160)
-	// abs et ord sont les coordonnées de la case :
-	//  - abs : L'abscisse de la case 
-	//  - ord : L'ordonné de la case 
-	place_tree: function(grid, tree, abs, ord){
-		var rowDep = get_in_grid_bounds(abs - 1, grid.nbRow);
-		var rowEnd = get_in_grid_bounds(abs + 1, grid.nbRow);
-		var colDep = get_in_grid_bounds(ord - 1, grid.nbCol);
-		var colEnd = get_in_grid_bounds(ord + 1, grid.nbCol);
+	place_tree: function(grid, tree){
+		var rowDep = get_in_grid_bounds(this.abs - 1, grid.nbRow);
+		var rowEnd = get_in_grid_bounds(this.abs + 1, grid.nbRow);
+		var colDep = get_in_grid_bounds(this.ord - 1, grid.nbCol);
+		var colEnd = get_in_grid_bounds(this.ord + 1, grid.nbCol);
 
 		// To be calculated : this.data.water_give + cases alentours
-		var water_given = (this.data.water_give === undefined || this.data.water_give == null) 
-						? 0 
-						: this.data.water_give;
+		// Variable à garder ou non ?
+		var water_given = 0;
 
 		// Calcul de l'eau fournie
 		for(var i = rowDep; i < rowEnd; i++)
@@ -88,13 +86,68 @@ var gridCase = Class.create({
 								? tree.water_need / water_given
 								: water_given / tree.water_need);
 
-		// Parcours des cases alentours pour affecter le score.
+		// Parcours des cases alentours pour affecter le score (et oxygen_received).
 		for(var i = rowDep; i < rowEnd; i++){
 			for(var j = colDep; j < colEnd; j++){
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received += this.data.oxygen_give;
 					case_score(grid[i][j]);
 				}
+			}
+		}
+
+		// Passer les valeurs de l'arbre à la case et actualiser les types. (case.data.type & case.data.tree_type)
+		this.data.default_oxygen_give = tree.data.default_oxygen_give;
+		this.data.cost = tree.data.cost;
+		this.type = "T";
+		this.data.tree_type = tree.data.tree_type;
+		this.data.water_need = tree.data.water_need;
+	},
+
+	// ATTENTION : Fonction de déforestation
+	// Retire un arbre d'une case et redonne les valeurs par défaut de la case vide. La fonction est appelée sur un arbre.
+	remove_tree: function(grid){
+		var rowDep = get_in_grid_bounds(this.abs - 1, grid.nbRow);
+		var rowEnd = get_in_grid_bounds(this.abs + 1, grid.nbRow);
+		var colDep = get_in_grid_bounds(this.ord - 1, grid.nbCol);
+		var colEnd = get_in_grid_bounds(this.ord + 1, grid.nbCol);
+
+		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
+		for(var i = rowDep; i < rowEnd; i++){
+			for(var j = colDep; j < colEnd; j++){
+				if(grid[i][j].type != "R"){
+					grid[i][j].data.oxygen_received -= this.data.oxygen_give;
+					case_score(grid[i][j]);
+				}
+			}
+		}
+		
+		// Variables à réinitialiser
+		// On enlève l'oxygène que donnait l'arbre courant à la case vide sur laquelle il était
+		this.data.oxygen_received -= this.data.oxygen_give;
+		this.data.water_need = 0;
+		this.data.default_oxygen_give = 0;
+		this.data.cost = 0;
+		this.type = "E";
+		this.data.tree_type = "";
+		this.data.oxygen_give = 0;
+	},
+
+	// ATTENTION : Fonction de déforestation massive
+	// Retire TOUS les arbres de la grille et redonne les valeurs par défaut de la case vide. La fonction est appelée sur un arbre.
+	clean_trees: function(grid){
+		var rowDep = get_in_grid_bounds(this.abs - 1, grid.nbRow);
+		var rowEnd = get_in_grid_bounds(this.abs + 1, grid.nbRow);
+		var colDep = get_in_grid_bounds(this.ord - 1, grid.nbCol);
+		var colEnd = get_in_grid_bounds(this.ord + 1, grid.nbCol);
+
+		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
+		for(var row = 0; row < grid.nbRow; row++){
+			for(var col = 0; col < grid.nbCol; col++){
+				if(grid[i][j].type == "T")
+					grid[i][j].remove_tree(grid);
+				else // Au cas ou
+					grid[i][j].score = 0;
 			}
 		}
 	},
@@ -109,7 +162,9 @@ var gridCase = Class.create({
 
 		var exc_oxygen = Math.abs(gridCase.data.oxygen_received - gridCase.data.oxygen_need);
 
-		gridCase.data.score = gridCase.data.oxygen_need - exc_oxygen + eff_oxygen;
+		gridCase.score = gridCase.data.oxygen_need - exc_oxygen + eff_oxygen;
+
+		return gridCase.score;
 	},
 
 	// Cette fonction permet d'obtenir les limites de la grille.
