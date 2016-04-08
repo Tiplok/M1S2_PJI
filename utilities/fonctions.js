@@ -3,6 +3,9 @@
 //         Rivière = R (River)
 //         Arbre   = A (Tree)
 
+function sendInitBoard(arrayBoard){
+}
+
 function loadContentBoard(){
     $.post('ajax/content_board.php', {
     }, function(data) {

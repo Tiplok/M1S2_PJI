@@ -2,9 +2,12 @@
     require_once 'includes/config.php';
     $title_page = 'Plateau du jeu';
     require_once 'includes/head.php';
+    
+    $encoded_array = json_encode($array_init_board_for_js);
+    $encoded_array = str_replace('"', '\'', $encoded_array);
 ?>
 
-<body onload="loadContentBoard();">
+<body onload="loadContentBoard();sendInitBoard(<?php echo $encoded_array; ?>);">
 
 <?php
     require_once 'includes/menu.php';
