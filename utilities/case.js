@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Use Prototype 1.6.0
 var gridCase = Class.create({
 	initialize: function(type, data){
@@ -11,21 +10,6 @@ var gridCase = Class.create({
 		this.data = data || {};
 		this.score = score || 0;
 	},
-=======
-/*class Case {
-	// Type Cases : Vide    = E (Empty)
-	//         		Ville   = T (Town)
-	//        		Rivière = R (River)
-	//        		Arbre   = A (Tree)
-	var type;
-	// Peut contenir eau fournie, oxygène requis/produit, ... selon type de case
-	var data;
-
-	constructor(type, data){
-		this.type = type;
-		this.data = data;
-	}
->>>>>>> origin/master
 
 	// Calcul du score de la grille, from scratch
 	grid_score: function(grid){
@@ -139,12 +123,4 @@ var gridCase = Class.create({
 				return limit;
 		}
 	}
-<<<<<<< HEAD
 });
-=======
-
-	get_positive(nb){
-		return (nb >= 0) ? nb : 0;
-	}
-}*/
->>>>>>> origin/master
