@@ -1,12 +1,17 @@
 <?php
     require_once 'includes/config.php';
     $title_page = 'Profil';
+    if(!is_logged()) {
+        header('Location: index.php');
+        exit;
+    }
     require_once 'includes/head.php';
 ?>
 
 <body>
 
 <?php
+    
     require_once 'includes/menu.php';
     
     $new_password = htmlspecialchars(filter_input(INPUT_POST, 'new_password'));

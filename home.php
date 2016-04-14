@@ -1,16 +1,17 @@
 <?php
     require_once 'includes/config.php';
     $title_page = 'Accueil';
+    if(!is_logged()) {
+        header('Location: index.php');
+        exit;
+    }
     require_once 'includes/head.php';
 ?>
 
 <body>
 
 <?php
-    if(!is_logged()) {
-        header('Location: index.php');
-        exit;
-    }
+    
     require_once 'includes/menu.php';
 ?>
 

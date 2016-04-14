@@ -1,6 +1,10 @@
 <?php
     require_once 'includes/config.php';
     $title_page = 'Plateau du jeu';
+    if(!is_logged()) {
+        header('Location: index.php');
+        exit;
+    }
     require_once 'includes/head.php';
     
     $encoded_array = json_encode($array_init_board_for_js);

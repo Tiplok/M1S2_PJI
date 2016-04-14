@@ -5,6 +5,8 @@ var gridCase = Class.create({
 		//         		Ville   = T (Town)
 		//        		Rivière = R (River)
 		//        		Arbre   = A (Tree)
+        this.data = {};
+        
 		switch(type.toUpperCase()){
 			case "EMPTY" :
 				this.type = "E";
@@ -29,7 +31,7 @@ var gridCase = Class.create({
 		}
 		this.abs = abs;
 		this.ord = ord;
-		this.score = score || 0;
+		this.score = data.score || 0;
 	},
 
 	// Calcul du score de la grille, from scratch

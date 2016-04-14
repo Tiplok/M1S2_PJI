@@ -5,20 +5,22 @@
     <meta charset="utf-8">
     <title><?php echo $title_project ?> - <?php echo $title_page ?></title>
 
+    <!-- Pour utiliser les fonctions prototype -->
+    <script type="text/javascript" src="<?php echo $folder;?>utilities/prototype/prototype_1.7.3.0.js"></script>
+    
     <!-- Pour utiliser jQuery -->
     <script type="text/javascript" src="<?php echo $folder;?>utilities/jquery/jquery-1.12.0.js"></script>
     
+    <script>jQuery.noConflict();</script>
+    
     <!-- Pour utiliser le plugin jQuery qTip -->
     <script type="text/javascript" src="<?php echo $folder;?>utilities/tooltip/jquery.qtip.js"></script>
-    
-    <!-- Pour utiliser les fonctions JavaScript -->
-    <script type="text/javascript" src="<?php echo $folder;?>utilities/fonctions.js"></script>
 
     <!-- Pour utiliser la classe JavaScript gridCase -->
     <script type="text/javascript" src="<?php echo $folder;?>utilities/case.js"></script>
-
-    <!-- Pour utiliser les fonctions prototype -->
-    <script type="text/javascript" src="<?php echo $folder;?>utilities/prototype/prototype_1.7.3.0.js"></script>
+    
+    <!-- Pour utiliser les fonctions JavaScript -->
+    <script type="text/javascript" src="<?php echo $folder;?>utilities/fonctions.js"></script>
     
     <!-- Lien vers le fichier css pour les tooltips qTip -->
     <link rel="stylesheet" type="text/css" href="<?php echo $folder;?>styles/jquery.qtip.css"/>

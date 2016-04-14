@@ -4,116 +4,129 @@
 //         Arbre   = A (Tree)
 
 function sendInitBoard(arrayBoard){
+    createGrid(arrayBoard);
 	// On récupère le tableau :)
-	console.log(arrayBoard);
+	/*console.log(arrayBoard);
 	console.log(arrayBoard.length);
 	console.log(arrayBoard[0].length);
-	console.log(arrayBoard[0][0].type.toUpperCase());
+	console.log(arrayBoard[0][0].type.toUpperCase());*/
 }
 
 function loadContentBoard(){
-	$.post('ajax/content_board.php', {
-	}, function(data) {
-		document.getElementById('main').innerHTML = data;
-		processTooltip();
-	});
+    jQuery(function ($) {
+        $.post('ajax/content_board.php', {
+        }, function(data) {
+            document.getElementById('main').innerHTML = data;
+            processTooltip();
+        });
+    });
 }
 
 function loadCurrentTree(PK_tree){
-	$.post('ajax/load_current_tree.php', {
-		PK_tree: PK_tree
-	}, function() {
-		loadContentBoard();
-	});
+    jQuery(function ($) {
+        $.post('ajax/load_current_tree.php', {
+            PK_tree: PK_tree
+        }, function() {
+            loadContentBoard();
+        });
+    });
 }
 
 function plantCurrentTree(row, column){
-	$.post('ajax/plant_current_tree.php', {
-		row: row,
-		column: column
-	}, function(data) {
-		if(data){
-			alert(data);
-		}
-		loadContentBoard();
-	});
+    jQuery(function ($) {
+        $.post('ajax/plant_current_tree.php', {
+            row: row,
+            column: column
+        }, function(data) {
+            if(data){
+                alert(data);
+            }
+            loadContentBoard();
+        });
+    });
 }
 
 function removeTree(row, column, deforestation){
-	// Cas où on demande de retirer toutes les fôrets
-	if(row == -1 && column == -1){
-		if(confirm('Êtes-vous sûr de vouloir retirer TOUTES les fôrets ?')){
-			$.post('ajax/remove_tree.php', {
-				row: row,
-				column: column
-			}, function() {
-				loadContentBoard();
-			});
-		}
-	} else {
-	
-		// Si on est en mode déforestation, pas de message de confirmation
-		if(deforestation){
-			$.post('ajax/remove_tree.php', {
-				row: row,
-				column: column
-			}, function() {
-				loadContentBoard();
-			});
-		} else {
-			if(confirm('Êtes-vous sûr de vouloir retirer cette fôret ?')){
-				$.post('ajax/remove_tree.php', {
-					row: row,
-					column: column
-				}, function() {
-					loadContentBoard();
-				});
-			}
-		}
-	}
+    jQuery(function ($) {
+        // Cas où on demande de retirer toutes les fôrets
+        if(row == -1 && column == -1){
+            if(confirm('Êtes-vous sûr de vouloir retirer TOUTES les fôrets ?')){
+                $.post('ajax/remove_tree.php', {
+                    row: row,
+                    column: column
+                }, function() {
+                    loadContentBoard();
+                });
+            }
+        } else {
+
+            // Si on est en mode déforestation, pas de message de confirmation
+            if(deforestation){
+                $.post('ajax/remove_tree.php', {
+                    row: row,
+                    column: column
+                }, function() {
+                    loadContentBoard();
+                });
+            } else {
+                if(confirm('Êtes-vous sûr de vouloir retirer cette fôret ?')){
+                    $.post('ajax/remove_tree.php', {
+                        row: row,
+                        column: column
+                    }, function() {
+                        loadContentBoard();
+                    });
+                }
+            }
+        }
+    });
 }
 
-$(document).ready(processTooltip);
+jQuery(function ($) {
+    $(document).ready(processTooltip);
+});
 
 function processTooltip(){
-	$('.tooltip').each(function () {
-		$(this).qtip({
-			content: {
-				text: function (event, api) {
-					$.ajax({
-						url: "ajax/tooltip.php", // Use href attribute as URL
-						method: "POST",
-						data: {
-							PK_table: $(this).attr('data-PK_table'), 
-							table: $(this).attr('data-table'),
-							info: $(this).attr('data-info')
-						}
-					}).then(function (content) {
-						// Set the tooltip content upon successful retrieval
-						api.set('content.text', content);
-					}, function (xhr, status, error) {
-						// Upon failure... set the tooltip content to error
-						api.set('content.text', status + ': ' + error);
-					});
+    jQuery(function ($) {
+        $('.tooltip').each(function () {
+            $(this).qtip({
+                content: {
+                    text: function (event, api) {
+                        $.ajax({
+                            url: "ajax/tooltip.php", // Use href attribute as URL
+                            method: "POST",
+                            data: {
+                                PK_table: $(this).attr('data-PK_table'), 
+                                table: $(this).attr('data-table'),
+                                info: $(this).attr('data-info')
+                            }
+                        }).then(function (content) {
+                            // Set the tooltip content upon successful retrieval
+                            api.set('content.text', content);
+                        }, function (xhr, status, error) {
+                            // Upon failure... set the tooltip content to error
+                            api.set('content.text', status + ': ' + error);
+                        });
 
-					return 'Chargement...'; // Set some initial text
-				}
-			},
-			position: {
-				viewport: $(window)
-			},
-			style: 'qtip-wiki',
-				show: {
-					solo: true, // Hide other when opening
-					delay: 0 // Show delay
-				},
-				hide: {
-					hide: false, // Hide other when opening
-					fixed: true, // Stay visible when mousing onto tooltip
-					delay: 0 // Hide delay (ms)
-				}
-		});
-	});
+                        return 'Chargement...'; // Set some initial text
+                    }
+                },
+                position: {
+                    viewport: $(window)
+                },
+                style: 'qtip-wiki',
+                    show: {
+                        solo: true, // Hide other when opening
+                        delay: 0 // Show delay
+                    },
+                    hide: {
+                        hide: false, // Hide other when opening
+                        fixed: true, // Stay visible when mousing onto tooltip
+                        delay: 0 // Hide delay (ms)
+                    }
+            });
+        });
+    });
 }
 
 function createGrid(arrayBoard){
