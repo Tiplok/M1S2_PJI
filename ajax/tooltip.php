@@ -31,15 +31,15 @@
                 <caption>Fôret</caption>
                 <tr>
                     <td>Type</td>
-                    <td><?php echo $row_tree['name'] ?></td>
+                    <td><?php echo $row_tree['tree_type'] ?></td>
                 </tr>
                 <tr>
                     <td>Oxygène produit</td>
-                    <td>PH / <?php echo $row_tree['oxygen_factor'] ?></td>
+                    <td>PH / <?php echo $row_tree['default_oxygen_give'] ?></td>
                 </tr>
                 <tr>
                     <td>Eau nécessaire</td>
-                    <td>PH / <?php echo $row_tree['water_needs'] ?></td>
+                    <td>PH / <?php echo $row_tree['water_need'] ?></td>
                 </tr>
             </table>
 
@@ -66,15 +66,15 @@
             <table id="table_tooltip">
                 <tr>
                     <td>Type</td>
-                    <td><?php echo $row_tree['name'] ?></td>
+                    <td><?php echo $row_tree['tree_type'] ?></td>
                 </tr>
                 <tr>
                     <td>Oxygène produit (max)</td>
-                    <td><?php echo $row_tree['oxygen_factor'] ?></td>
+                    <td><?php echo $row_tree['default_oxygen_give'] ?></td>
                 </tr>
                 <tr>
                     <td>Eau nécessaire</td>
-                    <td><?php echo $row_tree['water_needs'] ?></td>
+                    <td><?php echo $row_tree['water_need'] ?></td>
                 </tr>
             </table>
 

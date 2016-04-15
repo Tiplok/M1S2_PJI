@@ -3,21 +3,30 @@
 //         Rivière = R (River)
 //         Arbre   = A (Tree)
 
+var grid = new Array();
+var trees_score = 0;
+
 function sendInitBoard(arrayBoard){
     createGrid(arrayBoard);
-	// On récupère le tableau :)
-	/*console.log(arrayBoard);
-	console.log(arrayBoard.length);
-	console.log(arrayBoard[0].length);
-	console.log(arrayBoard[0][0].type.toUpperCase());*/
 }
 
-function loadContentBoard(){
+function loadContentBoard(score_modif = 0){
+    /*var score_modif = score_modif || 0;*/
+    if(score_modif){
+        trees_score += score_modif;
+    }
+    /*var current_money = parseInt((document.getElementById('current_money').value).replace(' ', ''));*/
     jQuery(function ($) {
-        $.post('ajax/content_board.php', {
+        $.post('ajax/get_current_money.php', {
         }, function(data) {
-            document.getElementById('main').innerHTML = data;
-            processTooltip();
+            var current_money = parseInt(data);
+            var total_score = current_money * 0.1 + trees_score;
+            $.post('ajax/content_board.php', {
+                total_score: total_score
+            }, function(data) {
+                document.getElementById('main').innerHTML = data;
+                processTooltip();
+            });
         });
     });
 }
@@ -38,10 +47,13 @@ function plantCurrentTree(row, column){
             row: row,
             column: column
         }, function(data) {
-            if(data){
+            if(data.indexOf('{') == -1){
                 alert(data);
+            }else{
+                var tree = JSON.parse(data);
+                var score_modif = grid[row][column].place_tree(grid, tree);
             }
-            loadContentBoard();
+            loadContentBoard(score_modif);
         });
     });
 }
@@ -96,9 +108,7 @@ function processTooltip(){
                             url: "ajax/tooltip.php", // Use href attribute as URL
                             method: "POST",
                             data: {
-                                PK_table: $(this).attr('data-PK_table'), 
-                                table: $(this).attr('data-table'),
-                                info: $(this).attr('data-info')
+                                array: $(this).attr('data-array')
                             }
                         }).then(function (content) {
                             // Set the tooltip content upon successful retrieval
@@ -133,32 +143,41 @@ function createGrid(arrayBoard){
 	var nbRow = arrayBoard.length;
 	var nbCol = arrayBoard[0].length;
 
-	var grid = new Array(nbRow);
+	grid = new Array(nbRow);
 	for (var i = 0; i < nbRow; i++) {
 		grid[i] = new Array(nbCol);
 		for(var j = 0; j < nbCol; j++){
 			grid[i][j] = new gridCase(arrayBoard[i][j].type, i, j, arrayBoard[i][j]);
+            if(grid[i][j].type == "T"){}
+                //
 		}
 	}
 
-	/*var grid = [
-		["E", "E", "E", "E", "E", "E", "E", "E", "E"], // L1
-		["R", "R", "E", "E", "E", "E", "E", "E", "E"], // L2
-		["E", "R", "R", "R", "R", "T", "E", "T", "T"], // L3
-		["E", "T", "T", "E", "R", "T", "E", "E", "E"], // L4
-		["E", "T", "T", "E", "R", "E", "E", "E", "E"], // L5
-		["E", "E", "E", "E", "R", "E", "E", "E", "E"], // L6
-		["E", "E", "E", "E", "R", "E", "E", "E", "E"], // L7
-		["T", "E", "E", "E", "R", "T", "E", "E", "E"], // L8
-		["E", "E", "R", "R", "R", "E", "E", "T", "T"], // L9
-		["E", "E", "R", "E", "E", "E", "E", "R", "R"], // L10
-		["E", "T", "R", "E", "E", "E", "E", "R", "E"], // L11
-		["E", "T", "R", "E", "E", "T", "T", "R", "E"], // L12
-		["E", "E", "R", "E", "E", "T", "T", "R", "E"], // L13
-		["E", "E", "R", "R", "R", "R", "R", "R", "T"], // L14
-		["E", "E", "E", "E", "E", "E", "E", "E", "E"], // L15
-		["T", "E", "E", "E", "E", "E", "E", "E", "E"]  // L16
-	]*/
+    trees_score = gridScore(grid);
+}
+
+// Calcul du score de la grille, from scratch
+function gridScore(grid){
+    var nbRow = grid.length;
+    var nbCol = grid[0].length;
+    var totalScore = 0;
+
+    // Itération sur la grille
+    for(var row = 0; row < nbRow; row++){
+        for(var col = 0; col < nbCol; col++){
+            console.log(grid[row][col]);
+
+            if(grid[row][col].type != "R"){
+                // Il faudra ajouter un bouton d'enregistrement de l'état de la grille pour 
+                // permettre de stocker les valeurs intéressantes en base de donnée et 
+                // ainsi d'aditionner simplement le score des cases Vides, Villes et Arbres (car extension de Vide)
+                totalScore += grid[row][col].score;
+            }
+
+        }
+    }
+
+    return totalScore;
 }
 
 // Should get from BDD

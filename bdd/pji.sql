@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 12 Avril 2016 à 17:43
+-- Généré le :  Ven 15 Avril 2016 à 14:14
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -33,7 +33,27 @@ CREATE TABLE IF NOT EXISTS `asso_user_tree` (
   `nb_column` int(11) NOT NULL,
   `FK_tree` int(11) NOT NULL,
   PRIMARY KEY (`PK_asso_user_tree`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+
+--
+-- Contenu de la table `asso_user_tree`
+--
+
+INSERT INTO `asso_user_tree` (`PK_asso_user_tree`, `FK_user`, `nb_row`, `nb_column`, `FK_tree`) VALUES
+(1, 1, 2, 10, 2),
+(2, 1, 3, 9, 3),
+(3, 1, 4, 1, 1),
+(4, 1, 6, 10, 1),
+(5, 1, 7, 10, 1),
+(6, 1, 1, 8, 3),
+(7, 1, 4, 5, 4),
+(8, 1, 3, 3, 4),
+(9, 1, 1, 3, 1),
+(10, 1, 5, 6, 1),
+(11, 1, 3, 5, 1),
+(12, 1, 0, 2, 1),
+(13, 1, 0, 6, 1),
+(14, 1, 4, 14, 1);
 
 -- --------------------------------------------------------
 
@@ -209,11 +229,11 @@ INSERT INTO `board_element` (`PK_board_element`, `type`, `nb_row`, `nb_column`, 
 
 CREATE TABLE IF NOT EXISTS `tree` (
   `PK_tree` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
+  `tree_type` varchar(30) NOT NULL,
   `cost` int(11) NOT NULL DEFAULT '5000',
   `image` varchar(30) NOT NULL,
-  `oxygen_factor` int(11) NOT NULL,
-  `water_needs` int(11) NOT NULL DEFAULT '200',
+  `default_oxygen_give` int(11) NOT NULL,
+  `water_need` int(11) NOT NULL DEFAULT '200',
   PRIMARY KEY (`PK_tree`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -221,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `tree` (
 -- Contenu de la table `tree`
 --
 
-INSERT INTO `tree` (`PK_tree`, `name`, `cost`, `image`, `oxygen_factor`, `water_needs`) VALUES
+INSERT INTO `tree` (`PK_tree`, `tree_type`, `cost`, `image`, `default_oxygen_give`, `water_need`) VALUES
 (1, 'Chêne', 9000, 'oak.png', 20, 200),
 (2, 'Pin', 8000, 'pine.png', 18, 180),
 (3, 'Hêtre', 7000, 'beech.png', 16, 160),
@@ -251,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`PK_user`, `username`, `password`, `money`, `actual_score`, `best_score`, `date_register`, `date_last_login`, `auth_level`) VALUES
-(1, 'aaa', '$6lg.gqkOafmo', 1000000, 0, 0, '2016-02-28 14:47:16', '2016-04-08 14:51:14', 'ok'),
+(1, 'aaa', '$6lg.gqkOafmo', 877000, 0, 0, '2016-02-28 14:47:16', '2016-04-15 13:43:59', 'ok'),
 (2, 'bbb', '$64VpQZON8slY', 1000000, 0, 0, '2016-03-04 14:31:51', NULL, 'ok'),
 (3, 'ccc', '$6hcCB2DaTbkI', 1000000, 0, 0, '2016-03-04 14:31:58', NULL, 'ok'),
 (4, 'ddd', '$6hQ57VN/Y0lk', 1000000, 0, 0, '2016-03-04 14:32:02', NULL, 'ok');

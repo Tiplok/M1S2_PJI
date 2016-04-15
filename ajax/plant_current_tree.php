@@ -7,7 +7,7 @@
         $result_user = $bdd->query($query_user);
         $row_user = $result_user->fetch(PDO::FETCH_ASSOC);
         
-        $query_tree = "SELECT cost FROM tree WHERE PK_tree = ".$_SESSION['current_PK_tree'];
+        $query_tree = "SELECT * FROM tree WHERE PK_tree = ".$_SESSION['current_PK_tree'];
         $result_tree = $bdd->query($query_tree);
         $row_tree = $result_tree->fetch(PDO::FETCH_ASSOC);
         
@@ -26,6 +26,9 @@
             $result_money = $bdd->prepare($query_money);
             $result_money->execute(array(
             ':money' => $row_user['money']-$row_tree['cost']));
+
+            // Retour le traitement en JS
+            echo html_entity_decode(json_encode($row_tree));
         } else {
             echo 'Vous n\'avez plus assez d\'argent pour planter cette fôret.';
         }

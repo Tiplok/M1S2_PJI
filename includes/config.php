@@ -44,13 +44,32 @@
     $result_board = $bdd->query($query_board);
     while($row_board = $result_board->fetch(PDO::FETCH_ASSOC)){
         // Création d'un tableau pour l'envoyer en javascript avec $arr[nb_row][nb_column] = type, oxygen, water
-        $array_init_board_for_js[$row_board['nb_row']][$row_board['nb_column']] = array('type' => $row_board['type'], 'oxygen' => $row_board['oxygen'], 'water' => $row_board['water']);
-    
+        switch(strtoupper($row_board['type'])){
+            case 'EMPTY':
+                $oxygen = 'oxygen_need';
+                $water = 'water_give';
+                break;
+            case 'TOWN' :
+                $oxygen = 'oxygen_need';
+                break;
+            case 'RIVER' :
+                $water = 'water_give';
+                break;
+            default :
+                break;
+        }
+
+        $array_init_board_for_js[$row_board['nb_row']][$row_board['nb_column']] = array();
+        $array_init_board_for_js[$row_board['nb_row']][$row_board['nb_column']]['type'] = $row_board['type'];
+        if(isset($oxygen))
+            $array_init_board_for_js[$row_board['nb_row']][$row_board['nb_column']]['data'][$oxygen] = $row_board['oxygen'];
+        if(isset($water))
+            $array_init_board_for_js[$row_board['nb_row']][$row_board['nb_column']]['data'][$water] = $row_board['water'];
     }
     
     
     
-    $array_init_board = array(
+    /*$array_init_board = array(
         array('T','E','E','E','E','E','E','E','T','E','E','E','E','E','R','E'),
         array('E','E','E','E','T','T','E','E','E','E','E','T','T','R','R','E'),
         array('E','E','R','R','R','R','R','R','E','E','E','T','T','R','E','E'),
@@ -60,7 +79,7 @@
         array('E','E','R','T','T','E','E','E','E','E','E','E','E','E','E','E'),
         array('E','E','R','R','R','R','R','T','E','E','E','E','E','T','E','E'),
         array('E','E','T','E','E','E','R','T','E','E','E','E','E','T','E','E')
-    );
+    );*/
     
     /* Script pour insérer les éléments du plateau */
     /*for($i = 0; $i < count($array_init_board); $i++){
