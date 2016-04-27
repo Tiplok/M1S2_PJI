@@ -7,6 +7,7 @@
     $query_user_tree = "SELECT * FROM asso_user_tree JOIN tree ON FK_tree = PK_tree WHERE FK_user = ".$_SESSION['PK_user'];
     $result_user_tree = $bdd->query($query_user_tree);
     while($row_user_tree = $result_user_tree->fetch(PDO::FETCH_ASSOC)){
+        $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['type'] = 'tree';
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['PK_tree'] = $row_user_tree['PK_tree'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['image'] = $row_user_tree['image'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['tree_type'] = $row_user_tree['tree_type'];
@@ -48,16 +49,19 @@
                 for($nb_row=0;$nb_row<9;$nb_row++){
                     echo '<tr>';
                     for($nb_column=0;$nb_column<16;$nb_column++){
+                        // Cas d'un arbre
                         if($array_board[$nb_row][$nb_column]['type'] == 'tree'){
-                            echo '<td><img class="tooltip" data-array="'.json_encode($array_board[$nb_row][$nb_column]).
-                                '" height="64px" width="64px" src="styles/images/board_icons/'.
+                            echo '<td><img class="tooltip" data-array="'.str_replace('"', '\'',html_entity_decode(json_encode($array_board[$nb_row][$nb_column]))).
+                                '" height="100%" width="100%" src="styles/images/board_icons/'.
                                 $array_board[$nb_row][$nb_column]['data']['image'].'" alt="tree" onclick="removeTree('.$nb_row.', '.$nb_column.
                                 ', '.(isset($_SESSION['current_PK_tree'])&&$_SESSION['current_PK_tree']==0?'true':'false').')"/></td>';
+                            
+                        // Autres cas
                         } else {
-                            echo '<td><img class="tooltip" data-array="'.json_encode($array_board[$nb_row][$nb_column]).
-                                '" height="64px" width="64px" src="styles/images/board_icons/'.$array_board[$nb_row][$nb_column]['type'].
-                                '.png" alt="'.$array_board[$nb_row][$nb_column]['type'].
-                                (($array_board[$nb_row][$nb_column] == 'empty') ? 'onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>' : '" /></td>');
+                            echo '<td><img class="tooltip" data-array="'.str_replace('"', '\'',html_entity_decode(json_encode($array_board[$nb_row][$nb_column]))).
+                                '" height="100%" width="100%" src="styles/images/board_icons/'.$array_board[$nb_row][$nb_column]['type'].
+                                '.png" alt="'.$array_board[$nb_row][$nb_column]['type'].'" '.
+                                (($array_board[$nb_row][$nb_column]['type'] == 'empty') ? 'onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>' : '" /></td>');
                         }
                     }
                     echo '</tr>';
@@ -67,6 +71,8 @@
     </table>
 </div>
 
+<div id="div_trees_select">
+    
 <?php
     $query_user = "SELECT money FROM user WHERE PK_user = ".$_SESSION['PK_user'];
     $result_user = $bdd->query($query_user);
@@ -76,7 +82,6 @@
 
 ?>
 
-<div id="div_trees_select">
     <table id="table_trees_select">
         <tr>
             <th colspan="3">Selection des fôrets</th>
@@ -88,10 +93,10 @@
         ?>
         <tr>
             <td class="td_tree_img">
-                <img class="tooltip" data-PK_table="<?php echo $row_list_tree['PK_tree']; ?>" data-table="tree" src="styles/images/board_icons/<?php echo $row_list_tree['image']; ?>" alt="tree" <?php if($_SESSION['current_PK_tree'] == $row_list_tree['PK_tree']) { echo 'style="border:solid 3px white;"'; } ?> height="64px" width="64px;" onclick="loadCurrentTree(<?php echo $row_list_tree['PK_tree']; ?>)"/>
+                <img class="tooltip" data-PK_table="<?php echo $row_list_tree['PK_tree']; ?>" data-table="tree" src="styles/images/board_icons/<?php echo $row_list_tree['image']; ?>" alt="tree" <?php if($_SESSION['current_PK_tree'] == $row_list_tree['PK_tree']) { echo 'style="border:solid 3px white;"'; } ?> height="100%" width="100%" onclick="loadCurrentTree(<?php echo $row_list_tree['PK_tree']; ?>)"/>
             </td>
             <td class="td_tree_text"><?php echo $row_list_tree['tree_type']; ?></td>
-            <td class="td_tree_text"><?php echo number_format($row_list_tree['cost'], 0, ',', ' '); ?></td>
+            <td class="td_tree_text"><?php echo number_format($row_list_tree['cost'], 0, ',', ' '); ?> €</td>
         </tr>
         <?php
             }

@@ -99,11 +99,12 @@
         
         #div_board {
             float: left;
-            width: 80%;
+            width: 70%;
         }
 
         #div_trees_select {
             float: right;
+            width: 30%;
         }
         
 
@@ -119,35 +120,33 @@
         #table_board td {
             border: 1px solid black;
             background-color: lightgreen;
-            height: 64px;
         }
         
         #table_board td img {
             display: block;
         }
         
-        .empty_td {
-            padding: black;
-        }
         
         #table_trees_select {
-            width: 260px;
+            width: 250px;
             text-align : center;
             margin: auto;
             border: 2px solid black;
         }
         
         #table_trees_select td {
-            border: 1px solid black;
+            //border: 1px solid black;
             background-color: lightgreen;
         }
         
         .td_tree_text {
-            padding: 25px;
+            padding: 15px;
+            width: 60px;
         }
         
         .td_tree_img {
-            width: 64px;
+            //width: 44px;
+            width: 40px;
         }
         
         .td_tree_img img {

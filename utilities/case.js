@@ -70,8 +70,8 @@ var gridCase = Class.create({
 							? 0 
 							: this.data.water_give;
 
-		console.log(rowDep, colDep);
-		console.log(rowEnd, colEnd);
+		//console.log(rowDep, colDep);
+		//console.log(rowEnd, colEnd);
 
 		// Calcul de l'eau fournie
 		for(var i = rowDep; i < rowEnd; i++)
@@ -86,12 +86,12 @@ var gridCase = Class.create({
 
 		var score_modif = 0;
 
-		console.log(this);
+		//console.log(this);
 
 		// Parcours des cases alentours pour affecter le score (et oxygen_received).
 		for(var i = rowDep; i <= rowEnd; i++){
 			for(var j = colDep; j <= colEnd; j++){
-				console.log(i, j);
+				//console.log(i, j);
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received += this.data.oxygen_give;
 					score_modif += grid[i][j].case_score();
@@ -162,7 +162,7 @@ var gridCase = Class.create({
 	// Excédant d'oxygène = Valeur absolue de l'oxygène fourni - requis
 	// Oxygène efficace = Oxygène fourni jusqu'à la limite de l'oxygène requis
 	case_score: function(){
-		console.log(this);
+		//console.log(this);
 		var eff_oxygen = (this.data.oxygen_received < this.data.oxygen_need)
 						? this.data.oxygen_received
 						: this.data.oxygen_need;

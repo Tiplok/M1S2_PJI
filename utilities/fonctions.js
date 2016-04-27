@@ -108,7 +108,8 @@ function processTooltip(){
                             url: "ajax/tooltip.php", // Use href attribute as URL
                             method: "POST",
                             data: {
-                                array: $(this).attr('data-array')
+                                array: $(this).attr('data-array'),
+                                PK_table: $(this).attr('data-PK_table')
                             }
                         }).then(function (content) {
                             // Set the tooltip content upon successful retrieval
@@ -165,7 +166,7 @@ function gridScore(grid){
     // Itération sur la grille
     for(var row = 0; row < nbRow; row++){
         for(var col = 0; col < nbCol; col++){
-            console.log(grid[row][col]);
+            //console.log(grid[row][col]);
 
             if(grid[row][col].type != "R"){
                 // Il faudra ajouter un bouton d'enregistrement de l'état de la grille pour 
