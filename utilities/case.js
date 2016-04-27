@@ -66,7 +66,7 @@ var gridCase = Class.create({
 
 		// To be calculated : this.data.water_give + cases alentours
 		// Variable à garder ou non ?
-		var water_given = (this.data.water_give === undefined || this.data.water_give == null) 
+		this.data.total_water_give = (this.data.water_give === undefined || this.data.water_give == null) 
 							? 0 
 							: this.data.water_give;
 
@@ -77,12 +77,12 @@ var gridCase = Class.create({
 		for(var i = rowDep; i < rowEnd; i++)
 			for(var j = colDep; j < colEnd; j++)
 				if(grid[i][j].type == "R")
-					water_given += grid[i][j].data.water_give;
+					this.data.total_water_give += grid[i][j].data.water_give;
 
 		this.data.oxygen_give = parseInt(parseInt(tree.default_oxygen_give)) * 
-								((water_given > parseInt(tree.water_need)) 
-								? parseInt(tree.water_need) / water_given
-								: water_given / parseInt(tree.water_need));
+								((this.data.total_water_give > parseInt(tree.water_need)) 
+								? parseInt(tree.water_need) / this.data.total_water_give
+								: this.data.total_water_give / parseInt(tree.water_need));
 
 		var score_modif = 0;
 
@@ -139,6 +139,7 @@ var gridCase = Class.create({
 		this.data.tree_type = "";
 		this.data.water_need = 0;
 		this.data.oxygen_give = 0;
+		this.data.total_water_give = 0;
 	},
 
 	// ATTENTION : Fonction de déforestation massive
