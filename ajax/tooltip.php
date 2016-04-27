@@ -9,6 +9,7 @@
     
     $array_element = str_replace('\'', '"', $array_element);
     $array_element = json_decode($array_element, true);
+    //var_dump($array_element);
     
     // Cas d'une fôret sur le plateau
     if($array_element['type'] == 'tree'){
