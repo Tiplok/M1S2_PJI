@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <td>Eau nécessaire</td>
-                <td><?php echo $array_element['data']['water_give'] ?> / <?php echo $array_element['data']['water_need'] ?></td>
+                <td><?php echo $array_element['data']['total_water_give'] ?> / <?php echo $array_element['data']['water_need'] ?></td>
             </tr>
         </table>
 

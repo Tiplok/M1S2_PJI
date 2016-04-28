@@ -71,6 +71,7 @@ function removeTree(row, column, deforestation){
 					row: row,
 					column: column
 				}, function() {
+                    // Toverifiy : Comment remove tous les tree ?
 					loadContentBoard();
 				});
 			}
@@ -82,6 +83,8 @@ function removeTree(row, column, deforestation){
 					row: row,
 					column: column
 				}, function() {
+                    // Toverifiy : cela provoque un bug => get_in_grid_bounds is not defined
+                    //grid[row][column].remove_tree(grid);
 					loadContentBoard();
 				});
 			} else {
@@ -90,6 +93,8 @@ function removeTree(row, column, deforestation){
 						row: row,
 						column: column
 					}, function() {
+                        // Toverifiy : cela provoque un bug => get_in_grid_bounds is not defined
+                        //grid[row][column].remove_tree(grid);
 						loadContentBoard();
 					});
 				}

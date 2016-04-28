@@ -92,9 +92,10 @@ var gridCase = Class.create({
 		//console.log(this);
 
 		// Parcours des cases alentours pour affecter le score (et oxygen_received).
-		for(var i = rowDep; i <= rowEnd; i++){
-			for(var j = colDep; j <= colEnd; j++){
-				//console.log(i, j);
+        // Toverify : Modification temporaire pour pouvoir poser des forêts dans la dernière colonne : rowEnd-1 et colEnd-1 au lieu de rowEnd et colEnd
+		for(var i = rowDep; i <= rowEnd-1; i++){
+			for(var j = colDep; j <= colEnd-1; j++){
+				console.log(i, j);
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received += this.data.oxygen_give;
 					this.data.score_modif += grid[i][j].case_score();

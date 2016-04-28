@@ -35,12 +35,34 @@
     
     $query_list_tree = "SELECT PK_tree, tree_type, cost, image FROM tree";
     $result_list_tree = $bdd->query($query_list_tree);
+    
+    // On recupère l'argent et le meilleur score de l'utilisateur
+    $query_user = "SELECT money, best_score FROM user WHERE PK_user = ".$_SESSION['PK_user'];
+    $result_user = $bdd->query($query_user);
+    $row_user = $result_user->fetch(PDO::FETCH_ASSOC);
+    
+    // Si il y a un score, on met à jour le score dans la BDD
+    if($total_score){
+        $total_score = round($total_score);
+        
+        $query_money = "UPDATE user SET actual_score = :actual_score WHERE PK_user = ".$_SESSION['PK_user'];
+        $result_money = $bdd->prepare($query_money);
+        $result_money->execute(array(
+        ':actual_score' => $total_score));
+
+        if($row_user['best_score'] < $total_score){
+            $query_money = "UPDATE user SET best_score = :best_score WHERE PK_user = ".$_SESSION['PK_user'];
+            $result_money = $bdd->prepare($query_money);
+            $result_money->execute(array(
+            ':best_score' => $total_score));
+        }
+    }
 ?>
 
 <h1>Plateau du jeu</h1>
 
 <div id="div_score">
-    Score : <?php echo $total_score?$total_score:0; ?>
+    Score actuel : <?php echo $total_score?display_nb($total_score):0; ?> (Meilleur score : <?php echo display_nb($row_user['best_score']); ?>)
 </div>
 
 <br>
@@ -68,7 +90,7 @@
                             echo '<td><img class="tooltip" data-array="'.str_replace('"', '\'',html_entity_decode(json_encode($array_board[$nb_row][$nb_column]))).
                                 '" height="100%" width="100%" src="styles/images/board_icons/'.$array_board[$nb_row][$nb_column]['type'].
                                 '.png" alt="'.$array_board[$nb_row][$nb_column]['type'].'" '.
-                                (($array_board[$nb_row][$nb_column]['type'] == 'empty') ? 'onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>' : '" /></td>');
+                                (($array_board[$nb_row][$nb_column]['type'] == 'E') ? 'onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>' : '/></td>');
                         }
                     }
                     echo '</tr>';
@@ -81,9 +103,6 @@
 <div id="div_trees_select">
     
 <?php
-    $query_user = "SELECT money FROM user WHERE PK_user = ".$_SESSION['PK_user'];
-    $result_user = $bdd->query($query_user);
-    $row_user = $result_user->fetch(PDO::FETCH_ASSOC);
 
     echo 'Argent disponible : <span id="current_money">'.number_format($row_user['money'], 0, ',', ' ').'</span>'. ' €.';
 
