@@ -1,8 +1,9 @@
 <?php
     require_once '../includes/config.php';
-    $array_board = filter_input(INPUT_POST, 'array_board');
+    $array_board = json_decode(filter_input(INPUT_POST, 'array_board'), true);
     $total_score = filter_input(INPUT_POST, 'total_score');
     $gridCase = filter_input(INPUT_POST, 'gridCase');
+    //var_dump($array_board);
 
     /*$array_board = $array_init_board_for_js;
     
@@ -56,7 +57,7 @@
                     echo '<tr>';
                     for($nb_column=0;$nb_column<16;$nb_column++){
                         // Cas d'un arbre
-                        if($array_board[$nb_row][$nb_column]['type'] == 'tree'){
+                        if($array_board[$nb_row][$nb_column]['type'] == 'A'){
                             echo '<td><img class="tooltip" data-array="'.str_replace('"', '\'',html_entity_decode(json_encode($array_board[$nb_row][$nb_column]))).
                                 '" height="100%" width="100%" src="styles/images/board_icons/'.
                                 $array_board[$nb_row][$nb_column]['data']['image'].'" alt="tree" onclick="removeTree('.$nb_row.', '.$nb_column.

@@ -16,17 +16,17 @@ function loadContentBoard(gridCase){
 	}else{
 		var gridCase = [];
 	}
-	console.log(grid);
 	/*var current_money = parseInt((document.getElementById('current_money').value).replace(' ', ''));*/
 	jQuery(function ($) {
 		$.post('ajax/get_current_money.php', {
 		}, function(data) {
 			var current_money = parseInt(data);
 			var total_score = current_money * 0.1 + trees_score;
+			console.log(grid);
 			$.post('ajax/content_board.php', {
-				array_board: grid,
+				array_board: JSON.stringify(grid),
 				total_score: total_score,
-				gridCase: gridCase
+				gridCase: JSON.stringify(gridCase)
 			}, function(data) {
 				document.getElementById('main').innerHTML = data;
 				processTooltip();
@@ -166,10 +166,13 @@ function createGrid(arrayBoard){
 		}
 	}
 
-	for (var i = 0; i < nbRow; i++)
-		for(var j = 0; j < nbCol; j++)
-			if((arrayBoard[i][j].type).toUpperCase() == "TREE")
+	for (var i = 0; i < nbRow; i++){
+		for(var j = 0; j < nbCol; j++){
+			if((arrayBoard[i][j].type).toUpperCase() == "TREE"){
 				grid[i][j].place_tree(grid, arrayBoard[i][j].data);
+			}
+		}
+	}
 
 	trees_score = gridScore(grid);
 }

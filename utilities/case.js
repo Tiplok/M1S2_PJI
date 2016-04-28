@@ -7,7 +7,7 @@ var gridCase = Class.create({
 		//        		Arbre   = A (Tree)
         this.data = {};
         
-        console.log(type);
+        /*console.log(type);*/
 
 		switch(type.toUpperCase()){
 			case "EMPTY" :
@@ -30,6 +30,7 @@ var gridCase = Class.create({
 				this.data.default_oxygen_give = parseInt(data.default_oxygen_give);
 				this.data.water_need = parseInt(data.water_need);
 				this.data.oxygen_received = parseInt(data.oxygen_received) || 0;
+				this.data.image = data.image;
 				break;
 			default :
 				this.type = "E";
@@ -102,11 +103,12 @@ var gridCase = Class.create({
 		}
 
 		// Passer les valeurs de l'arbre à la case et actualiser les types. (case.type & case.data.tree_type)
-		this.type = "T";
+		this.type = "A";
 		this.data.default_oxygen_give = parseInt(tree.default_oxygen_give);
 		this.data.cost = parseInt(tree.cost);
 		this.data.tree_type = tree.tree_type;
 		this.data.water_need = parseInt(tree.water_need);
+		this.data.image = tree.image;
 
 		return this;
 	},
@@ -154,7 +156,7 @@ var gridCase = Class.create({
 		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
 		for(var row = 0; row < nbRow; row++){
 			for(var col = 0; col < nbCol; col++){
-				if(grid[i][j].type == "T")
+				if(grid[i][j].type == "A")
 					grid[i][j].remove_tree(grid);
 				else // Au cas ou
 					grid[i][j].score = 0;
