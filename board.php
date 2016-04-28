@@ -11,7 +11,7 @@
     $encoded_array = str_replace('"', '\'', $encoded_array);
 ?>
 
-<body onload="loadContentBoard();sendInitBoard(<?php echo $encoded_array; ?>);">
+<body onload="sendInitBoard(<?php echo $encoded_array; ?>);loadContentBoard();">
 
 <?php
     require_once 'includes/menu.php';

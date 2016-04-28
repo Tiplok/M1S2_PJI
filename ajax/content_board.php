@@ -1,8 +1,10 @@
 <?php
     require_once '../includes/config.php';
+    $array_board = filter_input(INPUT_POST, 'array_board');
     $total_score = filter_input(INPUT_POST, 'total_score');
+    $gridCase = filter_input(INPUT_POST, 'gridCase');
 
-    $array_board = $array_init_board_for_js;
+    /*$array_board = $array_init_board_for_js;
     
     $query_user_tree = "SELECT * FROM asso_user_tree JOIN tree ON FK_tree = PK_tree WHERE FK_user = ".$_SESSION['PK_user'];
     $result_user_tree = $bdd->query($query_user_tree);
@@ -11,11 +13,14 @@
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['PK_tree'] = $row_user_tree['PK_tree'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['image'] = $row_user_tree['image'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['tree_type'] = $row_user_tree['tree_type'];
-        $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['total_water_give'] = $row_user_tree['total_water_give'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['water_need'] = $row_user_tree['water_need'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['default_oxygen_give'] = $row_user_tree['default_oxygen_give'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['cost'] = $row_user_tree['cost'];
-    }
+        if(!empty($gridCase) && $gridCase['abs'] == $row_user_tree['nb_row'] && $gridCase['ord'] == $row_user_tree['nb_column']){
+            $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['total_water_give'] = $gridCase['data']['total_water_give'];
+            var_dump($gridCase['data']['total_water_give']);
+        }
+    }*/
     
     /*$query_board_element = "SELECT * FROM board_element";
     $result_board_element = $bdd->query($query_board_element);

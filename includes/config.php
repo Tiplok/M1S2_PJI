@@ -67,6 +67,17 @@
             $array_init_board_for_js[$row_board['nb_row']][$row_board['nb_column']]['data'][$water] = $row_board['water'];
     }
     
+    $query_user_tree = "SELECT * FROM asso_user_tree JOIN tree ON FK_tree = PK_tree WHERE FK_user = ".$_SESSION['PK_user'];
+    $result_user_tree = $bdd->query($query_user_tree);
+    while($row_user_tree = $result_user_tree->fetch(PDO::FETCH_ASSOC)){
+        $array_init_board_for_js[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['type'] = 'tree';
+        $array_init_board_for_js[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['PK_tree'] = $row_user_tree['PK_tree'];
+        $array_init_board_for_js[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['image'] = $row_user_tree['image'];
+        $array_init_board_for_js[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['tree_type'] = $row_user_tree['tree_type'];
+        $array_init_board_for_js[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['water_need'] = $row_user_tree['water_need'];
+        $array_init_board_for_js[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['default_oxygen_give'] = $row_user_tree['default_oxygen_give'];
+        $array_init_board_for_js[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['cost'] = $row_user_tree['cost'];
+    }
     
     
     /*$array_init_board = array(

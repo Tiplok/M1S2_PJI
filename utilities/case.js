@@ -7,33 +7,35 @@ var gridCase = Class.create({
 		//        		Arbre   = A (Tree)
         this.data = {};
         
+        console.log(type);
+
 		switch(type.toUpperCase()){
 			case "EMPTY" :
 				this.type = "E";
-				this.data.oxygen_need = parseInt(data.oxygen);
-				this.data.water_give = parseInt(data.water);
+				this.data.oxygen_need = parseInt(data.oxygen_need);
+				this.data.water_give = parseInt(data.water_give);
 				this.data.oxygen_received = parseInt(data.oxygen_received) || 0;
 				break;
 			case "TOWN" :
 				this.type = "T";
-				this.data.oxygen_need = parseInt(data.oxygen);
+				this.data.oxygen_need = parseInt(data.oxygen_need);
 				this.data.oxygen_received = parseInt(data.oxygen_received) || 0;
 				break;
 			case "RIVER" :
 				this.type = "R";
-				this.data.water_give = parseInt(data.water);
+				this.data.water_give = parseInt(data.water_give);
 				break;
 			case "TREE" :
 				this.type = "A";
-				this.data.default_oxygen_give = parseInt(data.oxygen);
-				this.data.water_need = parseInt(data.water);
+				this.data.default_oxygen_give = parseInt(data.default_oxygen_give);
+				this.data.water_need = parseInt(data.water_need);
 				this.data.oxygen_received = parseInt(data.oxygen_received) || 0;
 				break;
 			default :
 				this.type = "E";
 		}
-		this.abs = abs;
-		this.ord = ord;
+		this.abs = parseInt(abs);
+		this.ord = parseInt(ord);
 		this.score = parseInt(data.score) || 0;
 	},
 
@@ -67,7 +69,7 @@ var gridCase = Class.create({
 		// To be calculated : this.data.water_give + cases alentours
 		// Variable à garder ou non ?
 		this.data.total_water_give = (this.data.water_give === undefined || this.data.water_give == null) 
-							? 0 
+							? 0
 							: this.data.water_give;
 
 		//console.log(rowDep, colDep);
@@ -79,12 +81,12 @@ var gridCase = Class.create({
 				if(grid[i][j].type == "R")
 					this.data.total_water_give += grid[i][j].data.water_give;
 
-		this.data.oxygen_give = parseInt(parseInt(tree.default_oxygen_give)) * 
+		this.data.oxygen_give = parseInt(tree.default_oxygen_give) * 
 								((this.data.total_water_give > parseInt(tree.water_need)) 
 								? parseInt(tree.water_need) / this.data.total_water_give
 								: this.data.total_water_give / parseInt(tree.water_need));
 
-		var score_modif = 0;
+		this.data.score_modif = 0;
 
 		//console.log(this);
 
@@ -94,7 +96,7 @@ var gridCase = Class.create({
 				//console.log(i, j);
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received += this.data.oxygen_give;
-					score_modif += grid[i][j].case_score();
+					this.data.score_modif += grid[i][j].case_score();
 				}
 			}
 		}
@@ -103,10 +105,10 @@ var gridCase = Class.create({
 		this.type = "T";
 		this.data.default_oxygen_give = parseInt(tree.default_oxygen_give);
 		this.data.cost = parseInt(tree.cost);
-		this.data.tree_type = parseInt(tree.tree_type);
+		this.data.tree_type = tree.tree_type;
 		this.data.water_need = parseInt(tree.water_need);
 
-		return score_modif;
+		return this;
 	},
 
 	// ATTENTION : Fonction de déforestation
@@ -140,6 +142,7 @@ var gridCase = Class.create({
 		this.data.water_need = 0;
 		this.data.oxygen_give = 0;
 		this.data.total_water_give = 0;
+		this.data.score_modif = 0;
 	},
 
 	// ATTENTION : Fonction de déforestation massive
