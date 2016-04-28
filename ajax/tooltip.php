@@ -6,13 +6,11 @@
     // On recupère un PK_table au lieu d'un array si c'est un arbre de la liste de selection
     $PK_table = filter_input(INPUT_POST, 'PK_table');
     
-    
     $array_element = str_replace('\'', '"', $array_element);
     $array_element = json_decode($array_element, true);
-    //var_dump($array_element);
     
     // Cas d'une fôret sur le plateau
-    if($array_element['type'] == 'tree'){
+    if($array_element['type'] == 'A'){
             
         // On récupère la position de la fôret plantée
         /*$query_tree_position = "SELECT nb_row, nb_column FROM tree JOIN asso_user_tree ON PK_tree = FK_tree WHERE PK_tree = ".$PK_table;
@@ -33,7 +31,7 @@
             </tr>
             <tr>
                 <td>Oxygène produit</td>
-                <td>PH / <?php echo $array_element['data']['default_oxygen_give'] ?></td>
+                <td><?php echo $array_element['data']['oxygen_give'] ?> / <?php echo $array_element['data']['default_oxygen_give'] ?></td>
             </tr>
             <tr>
                 <td>Eau nécessaire</td>
@@ -46,7 +44,7 @@
             <caption>Case</caption>
             <tr>
                 <td>Oxygène requis</td>
-                <td>PH / <?php echo $array_element['data']['oxygen_need'] ?></td>
+                <td><?php echo $array_element['data']['oxygen_received'] ?> / <?php echo $array_element['data']['oxygen_need'] ?></td>
             </tr>
             <tr>
                 <td>Eau fournie</td>
@@ -83,7 +81,7 @@
 <?php
         
     // Cas d'une ville
-    } elseif($array_element['type'] == 'town') {
+    } elseif($array_element['type'] == 'T') {
             
 ?>
 
@@ -95,7 +93,7 @@
                 </tr>
                 <tr>
                     <td>Oxygène nécessaire</td>
-                    <td>PH / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
+                    <td><?php echo $array_element['data']['oxygen_received'] ?> / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
                 </tr>
             </table>
 
@@ -104,7 +102,7 @@
         
         
     // Cas d'une rivière
-    } elseif($array_element['type'] == 'river'){
+    } elseif($array_element['type'] == 'R'){
         
 ?>
 
@@ -119,7 +117,7 @@
 <?php  
         
     // Cas d'une case vide
-    } elseif($array_element['type'] == 'empty'){
+    } elseif($array_element['type'] == 'E'){
             
 ?>
 
@@ -127,7 +125,7 @@
                 <caption>Case</caption>
                 <tr>
                     <td>Oxygène requis</td>
-                    <td>PH / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
+                    <td><?php echo $array_element['data']['oxygen_received'] ?> / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
                 </tr>
                 <tr>
                     <td>Eau fournie</td>
