@@ -18,8 +18,8 @@
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['default_oxygen_give'] = $row_user_tree['default_oxygen_give'];
         $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['cost'] = $row_user_tree['cost'];
         if(!empty($gridCase) && $gridCase['abs'] == $row_user_tree['nb_row'] && $gridCase['ord'] == $row_user_tree['nb_column']){
-            $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['total_water_give'] = $gridCase['data']['total_water_give'];
-            var_dump($gridCase['data']['total_water_give']);
+            $array_board[$row_user_tree['nb_row']][$row_user_tree['nb_column']]['data']['water_received'] = $gridCase['data']['water_received'];
+            var_dump($gridCase['data']['water_received']);
         }
     }*/
     

@@ -48,7 +48,7 @@
             </tr>
             <tr>
                 <td>Eau fournie</td>
-                <td><?php echo ($array_element['data']['total_water_give'] == 0) ? $array_element['data']['water_give'] : $array_element['data']['total_water_give'] ?></td>
+                <td><?php echo ($array_element['data']['water_received'] == 0) ? $array_element['data']['water_give'] : $array_element['data']['water_received'] ?></td>
             </tr>
         </table>
 

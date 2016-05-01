@@ -69,7 +69,7 @@ var gridCase = Class.create({
 
 		// To be calculated : this.data.water_give + cases alentours
 		// Variable à garder ou non ?
-		this.data.total_water_give = (this.data.water_give === undefined || this.data.water_give == null) 
+		this.data.water_received = (this.data.water_give === undefined || this.data.water_give == null) 
 							? 0
 							: this.data.water_give;
 
@@ -80,12 +80,12 @@ var gridCase = Class.create({
 		for(var i = rowDep; i < rowEnd; i++)
 			for(var j = colDep; j < colEnd; j++)
 				if(grid[i][j].type == "R")
-					this.data.total_water_give += grid[i][j].data.water_give;
+					this.data.water_received += grid[i][j].data.water_give;
 
 		this.data.oxygen_give = parseInt(tree.default_oxygen_give) * 
-								((this.data.total_water_give > parseInt(tree.water_need)) 
-								? parseInt(tree.water_need) / this.data.total_water_give
-								: this.data.total_water_give / parseInt(tree.water_need));
+								((this.data.water_received > parseInt(tree.water_need)) 
+								? parseInt(tree.water_need) / this.data.water_received
+								: this.data.water_received / parseInt(tree.water_need));
 
 		this.data.score_modif = 0;
 
@@ -144,7 +144,7 @@ var gridCase = Class.create({
 		this.data.tree_type = "";
 		this.data.water_need = 0;
 		this.data.oxygen_give = 0;
-		this.data.total_water_give = 0;
+		this.data.water_received = 0;
 		this.data.score_modif = 0;
 	},
 
