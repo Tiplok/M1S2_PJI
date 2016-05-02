@@ -22,7 +22,7 @@ function loadContentBoard(gridCase){
 		}, function(data) {
 			var current_money = parseInt(data);
 			var total_score = current_money * 0.1 + trees_score;
-            console.log(trees_score);
+            //console.log(trees_score);
 			$.post('ajax/content_board.php', {
 				array_board: JSON.stringify(grid),
 				total_score: total_score,
@@ -71,7 +71,7 @@ function removeTree(row, column, deforestation){
 					row: row,
 					column: column
 				}, function() {
-                    // Toverifiy : Comment remove tous les tree ?
+                    grid[0][0].clean_trees(grid);
 					loadContentBoard();
 				});
 			}
@@ -83,8 +83,7 @@ function removeTree(row, column, deforestation){
 					row: row,
 					column: column
 				}, function() {
-                    // Toverifiy : cela provoque un bug => get_in_grid_bounds is not defined
-                    //grid[row][column].remove_tree(grid);
+                    grid[row][column].remove_tree(grid);
 					loadContentBoard();
 				});
 			} else {
@@ -93,8 +92,7 @@ function removeTree(row, column, deforestation){
 						row: row,
 						column: column
 					}, function() {
-                        // Toverifiy : cela provoque un bug => get_in_grid_bounds is not defined
-                        //grid[row][column].remove_tree(grid);
+                        grid[row][column].remove_tree(grid);
 						loadContentBoard();
 					});
 				}

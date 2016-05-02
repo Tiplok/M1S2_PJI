@@ -95,7 +95,7 @@ var gridCase = Class.create({
         // Toverify : Modification temporaire pour pouvoir poser des forêts dans la dernière colonne : rowEnd-1 et colEnd-1 au lieu de rowEnd et colEnd
 		for(var i = rowDep; i <= rowEnd-1; i++){
 			for(var j = colDep; j <= colEnd-1; j++){
-				console.log(i, j);
+				//console.log(i, j);
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received += this.data.oxygen_give;
 					this.data.score_modif += grid[i][j].case_score();
@@ -120,10 +120,10 @@ var gridCase = Class.create({
 		var nbRow = grid.length;
 		var nbCol = grid[0].length;
 
-		var rowDep = get_in_grid_bounds(this.abs - 1, nbRow);
-		var rowEnd = get_in_grid_bounds(this.abs + 1, nbRow);
-		var colDep = get_in_grid_bounds(this.ord - 1, nbCol);
-		var colEnd = get_in_grid_bounds(this.ord + 1, nbCol);
+		var rowDep = this.get_in_grid_bounds(this.abs - 1, nbRow);
+		var rowEnd = this.get_in_grid_bounds(this.abs + 1, nbRow);
+		var colDep = this.get_in_grid_bounds(this.ord - 1, nbCol);
+		var colEnd = this.get_in_grid_bounds(this.ord + 1, nbCol);
 
 		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
 		for(var i = rowDep; i < rowEnd; i++){
@@ -155,8 +155,8 @@ var gridCase = Class.create({
 		var nbCol = grid[0].length;
 
 		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
-		for(var row = 0; row < nbRow; row++){
-			for(var col = 0; col < nbCol; col++){
+		for(var i = 0; i < nbRow; i++){
+			for(var j = 0; j < nbCol; j++){
 				if(grid[i][j].type == "A")
 					grid[i][j].remove_tree(grid);
 				else // Au cas ou
