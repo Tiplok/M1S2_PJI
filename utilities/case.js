@@ -92,9 +92,9 @@ var gridCase = Class.create({
 		//console.log(this);
 
 		// Parcours des cases alentours pour affecter le score (et oxygen_received).
-        // Toverify : Modification temporaire pour pouvoir poser des forêts dans la dernière colonne : rowEnd-1 et colEnd-1 au lieu de rowEnd et colEnd
-		for(var i = rowDep; i <= rowEnd-1; i++){
-			for(var j = colDep; j <= colEnd-1; j++){
+        // Toverify : Modification temporaire pour pouvoir poser des forêts dans la dernière colonne : i < rowEnd et j < colEnd au lieu de i <= rowEnd et j <= colEnd
+		for(var i = rowDep; i < rowEnd; i++){
+			for(var j = colDep; j < colEnd; j++){
 				//console.log(i, j);
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received += this.data.oxygen_give;
@@ -128,6 +128,7 @@ var gridCase = Class.create({
 		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
 		for(var i = rowDep; i < rowEnd; i++){
 			for(var j = colDep; j < colEnd; j++){
+                // Si c'est différent d'une rivière
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received -= this.data.oxygen_give;
 					grid[i][j].case_score();

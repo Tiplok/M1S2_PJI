@@ -1,7 +1,8 @@
 <?php
     require_once '../includes/config.php';
     
-    if($_SESSION['current_PK_tree'] != 0){
+    // Si on a bien une forêt selectionnée
+    if($_SESSION['current_PK_tree'] > 0){
     
         $query_user = "SELECT money FROM user WHERE PK_user = ".$_SESSION['PK_user'];
         $result_user = $bdd->query($query_user);
@@ -34,5 +35,4 @@
         }
     }
     
-    //$_SESSION['current_PK_tree'] = 0;
 ?>

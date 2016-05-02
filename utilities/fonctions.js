@@ -13,6 +13,7 @@ function sendInitBoard(arrayBoard){
 function loadContentBoard(gridCase){
 	if(gridCase !== undefined || gridCase != null){
 		trees_score += gridCase.data.score_modif;
+        //console.log("On ajoute au score : "+gridCase.data.score_modif);
 	}else{
 		var gridCase = [];
 	}
@@ -45,21 +46,24 @@ function loadCurrentTree(PK_tree){
 	});
 }
 
-function plantCurrentTree(row, column){
-	jQuery(function ($) {
-		$.post('ajax/plant_current_tree.php', {
-			row: row,
-			column: column
-		}, function(data) {
-			if(data.indexOf('{') == -1){
-				alert(data);
-			}else{
-				var tree = JSON.parse(data);
-				var gridCase = grid[row][column].place_tree(grid, tree);
-			}
-			loadContentBoard(gridCase);
-		});
-	});
+function plantCurrentTree(row, column, current_PK_tree){
+    // Si on a bien une forêt selectionnée
+    if(current_PK_tree > 0){
+        jQuery(function ($) {
+            $.post('ajax/plant_current_tree.php', {
+                row: row,
+                column: column
+            }, function(data) {
+                if(data.indexOf('{') == -1){
+                    alert(data);
+                } else {
+                    var tree = JSON.parse(data);
+                    var gridCase = grid[row][column].place_tree(grid, tree);
+                }
+                loadContentBoard(gridCase);
+            });
+        });
+    }
 }
 
 function removeTree(row, column, deforestation){

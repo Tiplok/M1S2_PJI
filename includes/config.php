@@ -107,12 +107,12 @@
     }*/
     
     /* Requêtes pour changer les valeurs des éléments du plateau */
-    "UPDATE board_element SET oxygen = 1000 WHERE type = 'empty'";
+    "UPDATE board_element SET oxygen = 3000 WHERE type = 'empty'";
     "UPDATE board_element SET water = 100 WHERE type = 'empty'";
     
     "UPDATE board_element SET water = 200 WHERE type = 'river'";
     
-    "UPDATE board_element SET oxygen = 70000 WHERE type = 'town'";
+    "UPDATE board_element SET oxygen = 7000 WHERE type = 'town'";
     
     
     //Récupère le fichier des fonctions php

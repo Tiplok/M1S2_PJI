@@ -90,7 +90,7 @@
                             echo '<td><img class="tooltip" data-array="'.str_replace('"', '\'',html_entity_decode(json_encode($array_board[$nb_row][$nb_column]))).
                                 '" height="100%" width="100%" src="styles/images/board_icons/'.$array_board[$nb_row][$nb_column]['type'].
                                 '.png" alt="'.$array_board[$nb_row][$nb_column]['type'].'" '.
-                                (($array_board[$nb_row][$nb_column]['type'] == 'E') ? 'onclick="plantCurrentTree('.$nb_row.', '.$nb_column.')"/></td>' : '/></td>');
+                                (($array_board[$nb_row][$nb_column]['type'] == 'E') ? 'onclick="plantCurrentTree('.$nb_row.', '.$nb_column.', '.$_SESSION['current_PK_tree'].')"/></td>' : '/></td>');
                         }
                     }
                     echo '</tr>';
