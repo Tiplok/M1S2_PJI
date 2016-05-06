@@ -40,7 +40,7 @@ var gridCase = Class.create({
 		this.score = parseInt(data.score) || 0;
 	},
 
-	// Cette fonction permet d'obtenir les limites de la grille.
+	// Cette fonction permet d'obtenir les limites d'un parcours autour d'une case en fonction des limites de la grille.
 	get_in_grid_bounds: function(nb, limit){
 		if(nb >= 0 && nb < limit){
 			return nb;
@@ -48,7 +48,7 @@ var gridCase = Class.create({
 			if(nb < 0)
 				return 0;
 			else
-				return limit;
+				return limit - 1;
 		}
 	},
 	
@@ -77,8 +77,8 @@ var gridCase = Class.create({
 		//console.log(rowEnd, colEnd);
 
 		// Calcul de l'eau fournie
-		for(var i = rowDep; i < rowEnd; i++)
-			for(var j = colDep; j < colEnd; j++)
+		for(var i = rowDep; i <= rowEnd; i++)
+			for(var j = colDep; j <= colEnd; j++)
 				if(grid[i][j].type == "R")
 					this.data.water_received += grid[i][j].data.water_give;
 
@@ -89,16 +89,13 @@ var gridCase = Class.create({
 
 		this.data.score_modif = 0;
 
-		//console.log(this);
-
 		// Parcours des cases alentours pour affecter le score (et oxygen_received).
         // Toverify : Modification temporaire pour pouvoir poser des forêts dans la dernière colonne : rowEnd-1 et colEnd-1 au lieu de rowEnd et colEnd
-		for(var i = rowDep; i <= rowEnd-1; i++){
-			for(var j = colDep; j <= colEnd-1; j++){
-				//console.log(i, j);
+		for(var i = rowDep; i <= rowEnd; i++){
+			for(var j = colDep; j <= colEnd; j++){
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received += this.data.oxygen_give;
-					this.data.score_modif += grid[i][j].case_score();
+					this.data.score_modif += -grid[i][j].score + grid[i][j].case_score();
 				}
 			}
 		}
@@ -110,6 +107,8 @@ var gridCase = Class.create({
 		this.data.tree_type = tree.tree_type;
 		this.data.water_need = parseInt(tree.water_need);
 		this.data.image = tree.image;
+
+		//console.log("addTree", this.data.score_modif);
 
 		return this;
 	},
@@ -125,27 +124,32 @@ var gridCase = Class.create({
 		var colDep = this.get_in_grid_bounds(this.ord - 1, nbCol);
 		var colEnd = this.get_in_grid_bounds(this.ord + 1, nbCol);
 
+		this.data.score_modif = 0;
+
 		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
-		for(var i = rowDep; i < rowEnd; i++){
-			for(var j = colDep; j < colEnd; j++){
+		for(var i = rowDep; i <= rowEnd; i++){
+			for(var j = colDep; j <= colEnd; j++){
 				if(grid[i][j].type != "R"){
 					grid[i][j].data.oxygen_received -= this.data.oxygen_give;
-					grid[i][j].case_score();
+					var diffScore = grid[i][j].score - grid[i][j].case_score();
+					//console.log("diffScore", diffScore);
+					this.data.score_modif -= diffScore;
 				}
 			}
 		}
-		
+
+		//console.log("removeTree", this.data.score_modif);
+
 		// Variables à réinitialiser
 		this.type = "E";
-		// On enlève l'oxygène que donnait l'arbre courant à la case vide sur laquelle il était
-		this.data.oxygen_received -= this.data.oxygen_give;
 		this.data.default_oxygen_give = 0;
 		this.data.cost = 0;
 		this.data.tree_type = "";
 		this.data.water_need = 0;
 		this.data.oxygen_give = 0;
 		this.data.water_received = 0;
-		this.data.score_modif = 0;
+
+		return this;
 	},
 
 	// ATTENTION : Fonction de déforestation massive
@@ -154,22 +158,30 @@ var gridCase = Class.create({
 		var nbRow = grid.length;
 		var nbCol = grid[0].length;
 
+		// Permet au PHP de gérer la déforestation
+		var fakeCase = {
+			data : {
+				score_modif : 0
+			}
+		};
+
 		// Parcours des cases alentours pour actualiser le score ainsi que oxygen_received.
 		for(var i = 0; i < nbRow; i++){
 			for(var j = 0; j < nbCol; j++){
 				if(grid[i][j].type == "A")
-					grid[i][j].remove_tree(grid);
+					fakeCase.data.score_modif += (grid[i][j].remove_tree(grid)).data.score_modif;
 				else // Au cas ou
 					grid[i][j].score = 0;
 			}
 		}
+
+		return fakeCase;
 	},
 
 	// Score d'une case : Oxygène requis - Excédant (en trop ou en manque) d'oxygène + oxygène efficace
 	// Excédant d'oxygène = Valeur absolue de l'oxygène fourni - requis
 	// Oxygène efficace = Oxygène fourni jusqu'à la limite de l'oxygène requis
 	case_score: function(){
-		//console.log(this);
 		var eff_oxygen = (this.data.oxygen_received < this.data.oxygen_need)
 						? this.data.oxygen_received
 						: this.data.oxygen_need;
@@ -177,6 +189,8 @@ var gridCase = Class.create({
 		var exc_oxygen = Math.abs(this.data.oxygen_received - this.data.oxygen_need);
 
 		this.score = this.data.oxygen_need - exc_oxygen + eff_oxygen;
+
+		//console.log("caseScore", this.score);
 
 		return this.score;
 	}

@@ -71,8 +71,8 @@ function removeTree(row, column, deforestation){
 					row: row,
 					column: column
 				}, function() {
-                    grid[0][0].clean_trees(grid);
-					loadContentBoard();
+                    var fakeCase = grid[0][0].clean_trees(grid);
+					loadContentBoard(fakeCase);
 				});
 			}
 		} else {
@@ -83,8 +83,8 @@ function removeTree(row, column, deforestation){
 					row: row,
 					column: column
 				}, function() {
-                    grid[row][column].remove_tree(grid);
-					loadContentBoard();
+                    var gridCase = grid[row][column].remove_tree(grid);
+					loadContentBoard(gridCase);
 				});
 			} else {
 				if(confirm('Êtes-vous sûr de vouloir retirer cette fôret ?')){
@@ -92,8 +92,8 @@ function removeTree(row, column, deforestation){
 						row: row,
 						column: column
 					}, function() {
-                        grid[row][column].remove_tree(grid);
-						loadContentBoard();
+                        var gridCase = grid[row][column].remove_tree(grid);
+						loadContentBoard(gridCase);
 					});
 				}
 			}
