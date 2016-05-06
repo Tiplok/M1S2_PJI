@@ -109,7 +109,7 @@
                     $row_username = $result_username->fetch(PDO::FETCH_ASSOC);
                     $_SESSION['PK_user'] = $row_username['PK_user'];
                     $_SESSION['username'] = $row_username['username'];
-                    $_SESSION['current_PK_tree'] = 0;
+                    $_SESSION['current_PK_tree'] = -1;
 
                     //On met à jour la date de la dernière connexion
                     $query_update_user = $bdd->prepare("UPDATE user SET date_last_login = :date_last_login WHERE username = ". $bdd->quote($_SESSION['username']));

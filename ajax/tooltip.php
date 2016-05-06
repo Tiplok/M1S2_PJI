@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <td>Oxygène produit</td>
-                <td><?php echo $array_element['data']['oxygen_give'] ?> / <?php echo $array_element['data']['default_oxygen_give'] ?></td>
+                <td><?php echo round($array_element['data']['oxygen_give']) ?> / <?php echo $array_element['data']['default_oxygen_give'] ?></td>
             </tr>
             <tr>
                 <td>Eau nécessaire</td>
@@ -44,7 +44,7 @@
             <caption>Case</caption>
             <tr>
                 <td>Oxygène requis</td>
-                <td><?php echo $array_element['data']['oxygen_received'] ?> / <?php echo $array_element['data']['oxygen_need'] ?></td>
+                <td><?php echo round($array_element['data']['oxygen_received']) ?> / <?php echo $array_element['data']['oxygen_need'] ?></td>
             </tr>
             <tr>
                 <td>Eau fournie</td>
@@ -89,11 +89,11 @@
                 <caption>Ville</caption>
                 <tr>
                     <td>Population</td>
-                    <td><?php echo number_format($array_element['data']['oxygen_need']/700, 0, ',', ' ') ?></td>
+                    <td><?php echo number_format($array_element['data']['oxygen_need']/70, 0, ',', ' ') ?></td>
                 </tr>
                 <tr>
                     <td>Oxygène nécessaire</td>
-                    <td><?php echo $array_element['data']['oxygen_received'] ?> / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
+                    <td><?php echo round($array_element['data']['oxygen_received']) ?> / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
                 </tr>
             </table>
 
@@ -125,7 +125,7 @@
                 <caption>Case</caption>
                 <tr>
                     <td>Oxygène requis</td>
-                    <td><?php echo $array_element['data']['oxygen_received'] ?> / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
+                    <td><?php echo round($array_element['data']['oxygen_received']) ?> / <?php echo number_format($array_element['data']['oxygen_need'], 0, ',', ' ') ?></td>
                 </tr>
                 <tr>
                     <td>Eau fournie</td>
