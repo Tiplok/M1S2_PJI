@@ -27,6 +27,7 @@ En fait, lorsqu'on plante un Pin sur une case vide entourée de 5 rivières, on 
 
 
 -- Beaucoup de problèmes : 
+- On comprend rien =solution=> Tutoriel, 
 - Pas équilibré =solution=> Equilibrer le jeu
 - "aux 8 cases alentours" => "aux 8 cases adjacentes"
 - Chargement du plateau lourd =solution=> Optimisation à faire
