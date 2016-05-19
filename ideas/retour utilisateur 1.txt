@@ -1,0 +1,44 @@
+Testeur : Tweep
+
+
+-- Manque d'un tutoriel :
+- Comment planter une forêt ? 
+Il faut cliquer sur l'image dans la selection des forêts puis sur une case vide. (Pas de drag & drop)
+
+- Sur quelle case peut-on planter une forêt ? 
+Case vide (il faudrait mettre un message quand on essaie de mettre une forêt sur une case où l'on ne peut pas planter)
+Plus de détails sur le fonctionnement des rivières. Compréhension : alentours/adjacentes
+
+- Quelles sont les cases qui ont un besoin en oxygène ?
+Ville ET Vide (il n'avait pas compris pour les cases vides au début)
+
+Il faut préciser qu'il n'est pas forcément nécessaire de planter des forêts sur chaque case vide pour optimiser l'oxygène ou son score.
+
+
+-- Remarques : 
+- Lorsque l'utilisateur a planté un arbre, le score n'a pas changé, un pin en (4,4) (en partant de 1).
+En fait, lorsqu'on plante un Pin sur une case vide entourée de 5 rivières, on gagne autant d'oxygène que le prix de pose de la forêt.
+
+- Au début, il ne se fiait qu'au score et pas à l'optimisation via les tooltips
+- On ne fait pas attention à l'oxygène des villes...
+- La ville en (4,7) ne sert à rien, on ne peut pas lui donner d'oxygène =solution=> la retirer et mettre une case vide.
+
+- Meilleur score obtenu : 511 162
+
+
+-- Beaucoup de problèmes : 
+- Pas équilibré =solution=> Equilibrer le jeu
+- "aux 8 cases alentours" => "aux 8 cases adjacentes"
+- Chargement du plateau lourd =solution=> Optimisation à faire
+- Tooltips relous, un peu lourd : Quand on va de gauche à droite, ça se chevauche et c'est pas très pratique =solution=> Utiliser une autre implémentation pour les tooltips (qTip pas adapté ?)
+- Feeling du jeu pas très agrèable à cause de la lourdeur des rechargements du contenu et des tooltips.
+- Toutes les cases vides ont un besoin en oxygène identique, toutes les villes aussi ainsi que le bonus d'eau des rivières, il faudrait changer cela.
+- Le meilleur score a un chargement de retard
+
+
+-- Idées :
+- Code couleur pour se retrouver dans l'oxygène des cases
+- Il faudrait être plus punitif sur le surplus d'oxygène ? (Dans certaine situation, on va créer beaucoup de surplus pour prodiguer de l'oxygène à pleins d'autres cases, est-ce vraiment bien ?)
+
+-- Bugs :
+- Balise nav fermante de trop

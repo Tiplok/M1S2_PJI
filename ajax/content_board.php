@@ -62,7 +62,7 @@
 <h1>Plateau du jeu</h1>
 
 <div id="div_score">
-    Score actuel : <?php echo $total_score?display_nb($total_score):0; ?> (Meilleur score : <?php echo display_nb($row_user['best_score']); ?>)
+    Score actuel : <?php echo $total_score?display_nb($total_score):0; ?> (Meilleur score : <?php echo ($total_score&&$total_score>$row_user['best_score']?display_nb($total_score):display_nb($row_user['best_score'])); ?>)
 </div>
 
 <br>

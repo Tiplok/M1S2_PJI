@@ -29,7 +29,6 @@
                     <li><a href="<?php echo $folder;?>about.php" title="Pour en savoir plus">A propos</a></li>
                     <li><a href="<?php echo $folder;?>logout.php" title="Se déconnecter">Déconnexion</a></li>
                 </ul>
-            </nav>
 <?php 
                 $auth_level = "SELECT auth_level FROM user WHERE username = ".$bdd->quote($_SESSION['username']);
                 $req_auth_level = $bdd->query($auth_level);
