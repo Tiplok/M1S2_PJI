@@ -12,7 +12,10 @@ function sendInitBoard(arrayBoard){
 
 function loadContentBoard(gridCase){
 	if(gridCase !== undefined || gridCase != null){
-		trees_score += gridCase.data.score_modif;
+		if(gridCase.data.score_modif != 0)
+			trees_score += gridCase.data.score_modif;
+		else
+			trees_score = 0;
         //console.log("On ajoute au score : "+gridCase.data.score_modif);
 	}else{
 		var gridCase = [];
@@ -76,6 +79,7 @@ function removeTree(row, column, deforestation){
 					column: column
 				}, function() {
                     var fakeCase = grid[0][0].clean_trees(grid);
+                    fakeCase.data.score_modif = 0;
 					loadContentBoard(fakeCase);
 				});
 			}
